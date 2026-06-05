@@ -1,0 +1,10 @@
+{
+  "name": "nodered-debian",
+  "version": "1.0.0",
+  "description": "Node-RED sobre Debian (glibc) con dashboard y tfjs coco-ssd",
+  "dependencies": {
+    "node-red": "^4.0.9",
+    "node-red-dashboard": "~3.6.6",
+    "node-red-contrib-tfjs-coco-ssd": "~1.0.6"
+  }
+}

@@ -1,0 +1,38 @@
+# ============================================================
+#  .gitignore - SmartHome IoT
+# ============================================================
+
+# ---- Documentacion y entregables (informe, guias) ----
+*.pdf
+*.tex
+*.md
+!README.md
+# Archivos auxiliares de LaTeX (por si se compila localmente)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# ---- Flujos de Node-RED ----
+# Se ignoran los exports con el token real; se sube solo node-red-flows.json (sin secretos)
+flow_*.json
+flows.json
+flows_cred.json
+nodered-debian/seed/
+!node-red-flows.json
+
+# ---- Datos generados en tiempo de ejecucion ----
+nodered-debian/datos/*.csv
+
+# ---- Python: cache ----
+**/__pycache__/
+*.pyc
+
+# ---- Sistema operativo / editores ----
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/

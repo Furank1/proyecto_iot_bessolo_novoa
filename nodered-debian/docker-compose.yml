@@ -1,0 +1,22 @@
+services:
+  nodered:
+    build: .
+    container_name: nodered-debian
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_debian_data:/data
+      - ./datos:/data/datos
+    restart: unless-stopped
+
+  face-service:
+    build: ./face-service
+    container_name: face-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./face-service/known_faces:/app/known_faces
+    restart: unless-stopped
+
+volumes:
+  nodered_debian_data:

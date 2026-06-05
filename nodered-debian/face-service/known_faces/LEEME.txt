@@ -1,0 +1,19 @@
+CARAS CONOCIDAS
+===============
+
+Poné en esta carpeta una foto por persona que quieras identificar.
+
+- El NOMBRE DEL ARCHIVO es la etiqueta que devolverá el sistema.
+  Ejemplos:
+    franco.jpg   -> identifica como "franco"
+    profesor.jpg -> identifica como "profesor"
+    mama.png     -> identifica como "mama"
+
+- Una sola cara por foto, de frente, bien iluminada.
+- Formatos: .jpg, .jpeg, .png
+
+Después de agregar o cambiar fotos, recargá sin reiniciar el contenedor:
+    Invoke-WebRequest -Method POST http://localhost:5000/reload
+
+Para ver qué caras están cargadas:
+    Invoke-WebRequest http://localhost:5000/health

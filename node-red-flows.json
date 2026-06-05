@@ -1,0 +1,1428 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "834ad0835709adb9",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.108.139.2",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9b04c3fa896638e7",
+        "type": "ui_tab",
+        "name": "IoT Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3ebd0da5088cd908",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "0502ac853b514fa6",
+        "type": "ui_group",
+        "name": "Ambiente",
+        "tab": "9b04c3fa896638e7",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grpCamara",
+        "type": "ui_group",
+        "name": "CÃ¡mara",
+        "tab": "9b04c3fa896638e7",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grpControl",
+        "type": "ui_group",
+        "name": "Control y estado",
+        "tab": "9b04c3fa896638e7",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "52ad945b1c70f1d5",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/sensor_extra",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 300,
+        "wires": [
+            [
+                "6638de5483e796ac",
+                "31a0f21ea672d0cb"
+            ]
+        ]
+    },
+    {
+        "id": "6638de5483e796ac",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "0502ac853b514fa6",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Nivel de audio",
+        "label": "pp",
+        "format": "{{msg.payload.sensor_extra}}",
+        "min": 0,
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 900,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "7a5313b7028874f4",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "cam/foto",
+        "qos": "2",
+        "datatype": "buffer",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 480,
+        "y": 560,
+        "wires": [
+            [
+                "3512c18dfbe91a74"
+            ]
+        ]
+    },
+    {
+        "id": "3512c18dfbe91a74",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "msg.payload = \"data:image/jpeg;base64,\" + msg.payload.toString('base64');\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 560,
+        "wires": [
+            [
+                "58a559c4b59b3dad"
+            ]
+        ]
+    },
+    {
+        "id": "58a559c4b59b3dad",
+        "type": "ui_template",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpCamara",
+        "name": "",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "<img src=\"{{msg.payload}}\" style=\"width:100%\"/>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 860,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a9da414b38e4b6b",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 760,
+        "wires": [
+            [
+                "d3d68a440ce5dcb8"
+            ]
+        ]
+    },
+    {
+        "id": "d3d68a440ce5dcb8",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "0502ac853b514fa6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "Ã‚Â°C",
+        "format": "{{msg.payload.temperatura}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 850,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "9641faa0874ce9dd",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/humedad",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 550,
+        "y": 1020,
+        "wires": [
+            [
+                "0b85d799066fd1a6"
+            ]
+        ]
+    },
+    {
+        "id": "0b85d799066fd1a6",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "0502ac853b514fa6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humedad",
+        "label": "%",
+        "format": "{{msg.payload.humedad}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 840,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "db8f73b0f7a46196",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/presion",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 1120,
+        "wires": [
+            [
+                "ac1d7a83c02d16d1"
+            ]
+        ]
+    },
+    {
+        "id": "ac1d7a83c02d16d1",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "0502ac853b514fa6",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Presion",
+        "label": "hPa",
+        "format": "{{msg.payload.presion}}",
+        "min": "900",
+        "max": "1100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 840,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "499025c4b2a14647",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "cam/foto",
+        "qos": "2",
+        "datatype": "buffer",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 480,
+        "y": 660,
+        "wires": [
+            [
+                "10c6dc662bd73884"
+            ]
+        ]
+    },
+    {
+        "id": "4640e9bf00ce4c5a",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "check persona",
+        "func": "const personas = msg.payload.filter(d => d.class === 'person' && d.score > 0.7);\n\nif (personas.length > 0) {\n    msg.payload = \"SI - \" + Math.round(personas[0].score * 100) + \"%\";\n    msg.detectado = true;\n} else {\n    msg.payload = \"NO\";\n    msg.detectado = false;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 660,
+        "wires": [
+            [
+                "7d80d6aa8b67d42f",
+                "979f68a115d79579"
+            ]
+        ]
+    },
+    {
+        "id": "7d80d6aa8b67d42f",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpCamara",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Persona Detectada",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1150,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "10c6dc662bd73884",
+        "type": "tensorflowCoco",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "modelUrl": "http://localhost:1880/coco/model.json",
+        "scoreThreshold": 0.5,
+        "passthru": "false",
+        "lineColour": "magenta",
+        "x": 670,
+        "y": 660,
+        "wires": [
+            [
+                "4640e9bf00ce4c5a",
+                "562a485d57caf195"
+            ]
+        ]
+    },
+    {
+        "id": "979f68a115d79579",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "detectado",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1130,
+        "y": 720,
+        "wires": [
+            [
+                "a75f53b5de36cbec"
+            ]
+        ]
+    },
+    {
+        "id": "a75f53b5de36cbec",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/camara/evento",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 1370,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "b0ebd2e7352bc074",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/sensor_extra",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "ba73dda3c6d5d86e"
+            ]
+        ]
+    },
+    {
+        "id": "ba73dda3c6d5d86e",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.sensor_extra",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "1000",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 380,
+        "wires": [
+            [
+                "9e6e51b0c4161e54"
+            ]
+        ]
+    },
+    {
+        "id": "9e6e51b0c4161e54",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ALERTA: Ruido alto detectado",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 380,
+        "wires": [
+            [
+                "1c6b9304f2752925",
+                "b5239a04d2745101"
+            ]
+        ]
+    },
+    {
+        "id": "1c6b9304f2752925",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpControl",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alerta",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1270,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b5239a04d2745101",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/alerta",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 1340,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d79cce38027abc1a",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 880,
+        "wires": [
+            [
+                "b43a202bbf87200c"
+            ]
+        ]
+    },
+    {
+        "id": "b43a202bbf87200c",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.temperatura",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 880,
+        "wires": [
+            [
+                "989a68b1c8e58fb7"
+            ]
+        ]
+    },
+    {
+        "id": "989a68b1c8e58fb7",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ALERTA: Temperatura alta",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 880,
+        "wires": [
+            [
+                "db57eaab1e9e4a78",
+                "0b2cfb30ea6ea212"
+            ]
+        ]
+    },
+    {
+        "id": "db57eaab1e9e4a78",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpControl",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alerta",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1270,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "0b2cfb30ea6ea212",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "smarthome/equipo01/alerta",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 1340,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "562a485d57caf195",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f1cam01",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "cam/foto (facial)",
+        "topic": "cam/foto",
+        "qos": "2",
+        "datatype": "buffer",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 920,
+        "wires": [
+            [
+                "f1face01"
+            ]
+        ]
+    },
+    {
+        "id": "f1face01",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "face-service identify",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://face-service:5000/identify",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 920,
+        "wires": [
+            [
+                "f1fn01"
+            ]
+        ]
+    },
+    {
+        "id": "f1fn01",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "filtrar + notificar",
+        "func": "const r = msg.payload;\nlet dashText;\nlet telegramMsg = null;\n\nif (!r.persona || r.nombre === \"sin_cara\") {\n    dashText = \"sin cara\";\n} else if (r.nombre === \"desconocido\") {\n    dashText = \"desconocido\";\n} else {\n    // persona conocida\n    dashText = r.nombre + \" (\" + r.confianza + \"%)\";\n    flow.set(\"persona_text\", r.nombre);\n    flow.set(\"persona_time\", Date.now());\n    const ahora = Date.now();\n    const COOLDOWN = 60000; // 60s por persona para no spamear\n    const last = flow.get(\"notif_\" + r.nombre) || 0;\n    if (ahora - last >= COOLDOWN) {\n        flow.set(\"notif_\" + r.nombre, ahora);\n        const ts = new Date().toLocaleString(\"es-CL\");\n        telegramMsg = {\n            headers: { \"Content-Type\": \"application/json\" },\n            payload: {\n                chat_id: 0,\n                text: \"ALERTA SmartHome\\nEvento: persona detectada\\nPersona: \" + r.nombre +\n                      \" (\" + r.confianza + \"%)\\nHora: \" + ts\n            }\n        };\n    }\n}\n\nreturn [telegramMsg, { payload: dashText }];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 920,
+        "wires": [
+            [
+                "f1tg01"
+            ],
+            [
+                "f1txt01"
+            ]
+        ]
+    },
+    {
+        "id": "f1tg01",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "Telegram sendMessage",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.telegram.org/botREEMPLAZAR_CON_TU_TOKEN/sendMessage",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 880,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1txt01",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpCamara",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Persona identificada",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 880,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "csvT",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "csv: temperatura",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 1100,
+        "wires": [
+            [
+                "csvStore"
+            ]
+        ]
+    },
+    {
+        "id": "csvH",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "csv: humedad",
+        "topic": "smarthome/equipo01/humedad",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 1140,
+        "wires": [
+            [
+                "csvStore"
+            ]
+        ]
+    },
+    {
+        "id": "csvP",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "csv: presion",
+        "topic": "smarthome/equipo01/presion",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 1180,
+        "wires": [
+            [
+                "csvStore"
+            ]
+        ]
+    },
+    {
+        "id": "csvX",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "csv: sensor_extra",
+        "topic": "smarthome/equipo01/sensor_extra",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 1220,
+        "wires": [
+            [
+                "csvStore"
+            ]
+        ]
+    },
+    {
+        "id": "csvAL",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "csv: alerta",
+        "topic": "smarthome/equipo01/alerta",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 1260,
+        "wires": [
+            [
+                "csvStore"
+            ]
+        ]
+    },
+    {
+        "id": "csvStore",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "guardar en contexto",
+        "func": "let p = msg.payload;\nif (Buffer.isBuffer(p)) p = p.toString();\nif (typeof p === \"string\") { try { p = JSON.parse(p); } catch (e) { /* alerta es texto plano */ } }\nconst t = msg.topic || \"\";\nif (t.endsWith(\"/temperatura\") && p && p.temperatura !== undefined) flow.set(\"temperatura\", p.temperatura);\nelse if (t.endsWith(\"/humedad\") && p && p.humedad !== undefined) flow.set(\"humedad\", p.humedad);\nelse if (t.endsWith(\"/presion\") && p && p.presion !== undefined) flow.set(\"presion\", p.presion);\nelse if (t.endsWith(\"/sensor_extra\") && p && p.sensor_extra !== undefined) flow.set(\"sensor_extra\", p.sensor_extra);\nelse if (t.endsWith(\"/alerta\")) { flow.set(\"alerta_text\", typeof p === \"string\" ? p : JSON.stringify(p)); flow.set(\"alerta_time\", Date.now()); }\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "csvTick",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "cada 10s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1340,
+        "wires": [
+            [
+                "csvBuild"
+            ]
+        ]
+    },
+    {
+        "id": "csvBuild",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "armar registro",
+        "func": "const temperatura = flow.get(\"temperatura\");\nconst humedad = flow.get(\"humedad\");\nconst presion = flow.get(\"presion\");\nconst sensor_extra = flow.get(\"sensor_extra\");\n// no escribir fila si todavia no llego ningun dato de sensores\nif (temperatura === undefined && humedad === undefined && presion === undefined && sensor_extra === undefined) {\n    return null;\n}\nconst at = flow.get(\"alerta_time\") || 0;\nconst alerta = (Date.now() - at < 15000) ? (flow.get(\"alerta_text\") || \"normal\") : \"normal\";\nconst pt = flow.get(\"persona_time\") || 0;\nconst persona = (Date.now() - pt < 15000) ? (flow.get(\"persona_text\") || \"ninguna\") : \"ninguna\";\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    temperatura: temperatura,\n    humedad: humedad,\n    presion: presion,\n    sensor_extra: sensor_extra,\n    alerta: alerta,\n    persona: persona\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1340,
+        "wires": [
+            [
+                "csvConv"
+            ]
+        ]
+    },
+    {
+        "id": "csvConv",
+        "type": "csv",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperatura,humedad,presion,sensor_extra,alerta,persona",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 590,
+        "y": 1340,
+        "wires": [
+            [
+                "csvFile"
+            ]
+        ]
+    },
+    {
+        "id": "csvFile",
+        "type": "file",
+        "z": "f6f2187d.f17ca8",
+        "name": "registro.csv",
+        "filename": "/data/datos/registro.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 790,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dbChartMqtt",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "chart: temperatura",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "834ad0835709adb9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 1460,
+        "wires": [
+            [
+                "dbChartFn"
+            ]
+        ]
+    },
+    {
+        "id": "dbChartFn",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "a numero",
+        "func": "let p = msg.payload;\nif (Buffer.isBuffer(p)) p = p.toString();\nif (typeof p === \"string\") { try { p = JSON.parse(p); } catch (e) {} }\nif (!p || p.temperatura === undefined) return null;\nmsg.payload = p.temperatura;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 1460,
+        "wires": [
+            [
+                "dbChart"
+            ]
+        ]
+    },
+    {
+        "id": "dbChart",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "Temperatura historico",
+        "group": "0502ac853b514fa6",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura (Â°C) - historico",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "esperando datos...",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 620,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dbCapBtn",
+        "type": "ui_button",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "grpCamara",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Capturar imagen",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "capturar",
+        "payloadType": "str",
+        "topic": "smarthome/equipo01/camara/captura",
+        "topicType": "str",
+        "x": 180,
+        "y": 1540,
+        "wires": [
+            [
+                "dbCapOut"
+            ]
+        ]
+    },
+    {
+        "id": "dbCapOut",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "captura manual",
+        "topic": "smarthome/equipo01/camara/captura",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 450,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "dbLedSwitch",
+        "type": "ui_switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "label": "LED manual",
+        "tooltip": "",
+        "group": "grpControl",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "smarthome/equipo01/control/led",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "on",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "off",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 180,
+        "y": 1600,
+        "wires": [
+            [
+                "dbLedOut",
+                "dbLedFn"
+            ]
+        ]
+    },
+    {
+        "id": "dbLedOut",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "control LED",
+        "topic": "smarthome/equipo01/control/led",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 440,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "dbLedFn",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "estado LED",
+        "func": "msg.payload = (msg.payload === \"on\") ? \"ðŸ”´ Encendido\" : \"âš« Apagado\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1620,
+        "wires": [
+            [
+                "dbLedTxt"
+            ]
+        ]
+    },
+    {
+        "id": "dbLedTxt",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpControl",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Estado LED",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "dbStTick",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "cada 1s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1680,
+        "wires": [
+            [
+                "dbStFn"
+            ]
+        ]
+    },
+    {
+        "id": "dbStFn",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "estado sistema",
+        "func": "const now = Date.now();\nconst at = flow.get(\"alerta_time\") || 0;\nconst pt = flow.get(\"persona_time\") || 0;\nlet estado;\nif (now - at < 4000) {\n    estado = \"ðŸ”´ \" + (flow.get(\"alerta_text\") || \"ALERTA\");\n} else if (now - pt < 6000) {\n    estado = \"ðŸŸ¡ Persona: \" + (flow.get(\"persona_text\") || \"\");\n} else {\n    estado = \"ðŸŸ¢ Normal\";\n}\nmsg.payload = estado;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 1680,
+        "wires": [
+            [
+                "dbStTxt"
+            ]
+        ]
+    },
+    {
+        "id": "dbStTxt",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "grpControl",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Estado del sistema",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "31a0f21ea672d0cb",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 240,
+        "wires": []
+    }
+]
