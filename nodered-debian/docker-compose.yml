@@ -1,4 +1,10 @@
 services:
+  mosquitto:
+    image: eclipse-mosquitto
+    ports: ["8883:8883"]
+    volumes: ["./mosquitto:/mosquitto/config"]
+    restart: unless-stopped
+
   nodered:
     build: .
     container_name: nodered-debian
