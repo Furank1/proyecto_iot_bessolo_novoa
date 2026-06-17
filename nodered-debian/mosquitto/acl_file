@@ -2,5 +2,8 @@ user admin
 topic readwrite #
 
 user sensor
-topic write smarthome/equipoXX/#
-topic read smarthome/equipoXX/control/#
+# Sensores publican sus lecturas y la camara publica las fotos
+topic write smarthome/equipo01/#
+topic write cam/#
+# Los dispositivos se suscriben a alerta, control/led y camara/captura
+topic read smarthome/equipo01/#

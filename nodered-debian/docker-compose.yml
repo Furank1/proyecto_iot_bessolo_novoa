@@ -8,6 +8,8 @@ services:
   nodered:
     build: .
     container_name: nodered-debian
+    depends_on:
+      - mosquitto
     ports:
       - "1880:1880"
     volumes:

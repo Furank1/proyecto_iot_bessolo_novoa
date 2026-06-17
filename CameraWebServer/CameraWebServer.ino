@@ -1,11 +1,12 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 #include <PubSubClient.h>
+#include <WiFiClientSecure.h>
 
 const char* ssid        = "S24 de Franco";
 const char* password    = "hola1234";
 const char* mqtt_server = "10.108.139.2";
-const int   mqtt_port   = 1883;
+const int   mqtt_port   = 8883;
 
 const char* TOPIC_FOTO    = "cam/foto";
 const char* TOPIC_CAPTURA = "smarthome/equipo01/camara/captura";
@@ -29,7 +30,7 @@ const unsigned long INTERVALO = 3000;   // foto automatica cada 3s
 #define HREF_GPIO_NUM  23
 #define PCLK_GPIO_NUM  22
 
-WiFiClient   espClient;
+WiFiClientSecure espClient;
 PubSubClient mqtt(espClient);
 unsigned long lastCapture = 0;
 
@@ -88,8 +89,7 @@ void connectWiFi() {
 void connectMQTT() {
   while (!mqtt.connected()) {
     Serial.print("MQTT...");
-    if (mqtt.connect("ESP32CAM-01")) {
-      Serial.println("OK");
+    if (mqtt.connect("ESP32-Sensores", "sensor", "sensor123")) {
       mqtt.subscribe(TOPIC_CAPTURA);
     } else {
       Serial.print("error "); Serial.println(mqtt.state());
@@ -105,6 +105,7 @@ void setup() {
   mqtt.setServer(mqtt_server, mqtt_port);
   mqtt.setCallback(mqttCallback);
   mqtt.setBufferSize(60000);   // imprescindible para enviar imagenes
+  espClient.setInsecure();
   connectMQTT();
 }
 
