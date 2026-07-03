@@ -1,62 +1,30 @@
 [
     {
-        "id": "f6f2187d.f17ca8",
+        "id": "25ad5c5be53da888",
         "type": "tab",
         "label": "Flow 1",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "834ad0835709adb9",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mosquitto",
-        "port": 8883,
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": true,
-        "tls": "tls_smarthome_01",
-        "protocolVersion": 4,
-        "keepalive": 60,
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
+        "id": "4a1a66b1f3341ffc",
+        "type": "tab",
+        "label": "LLM Unidad 2",
+        "disabled": false,
+        "info": ""
     },
     {
-        "id": "tls_smarthome_01",
-        "type": "tls-config",
-        "name": "SmartHome TLS",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "",
-        "servername": "",
-        "verifyservercert": false,
-        "alpnprotocol": ""
+        "id": "consulta_llm_tab",
+        "type": "tab",
+        "label": "Consulta LLM",
+        "disabled": false,
+        "info": ""
     },
     {
         "id": "9b04c3fa896638e7",
         "type": "ui_tab",
-        "name": "IoT Dashboard",
-        "icon": "dashboard",
+        "name": "Casa Inteligente",
+        "icon": "home",
         "disabled": false,
         "hidden": false
     },
@@ -64,7 +32,7 @@
         "id": "3ebd0da5088cd908",
         "type": "ui_base",
         "theme": {
-            "name": "theme-light",
+            "name": "theme-custom",
             "lightTheme": {
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
@@ -78,67 +46,65 @@
                 "edited": false
             },
             "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                "name": "SmartHome Dark",
+                "default": "#22c55e",
+                "baseColor": "#22c55e",
+                "baseFont": "Plus Jakarta Sans,Segoe UI,Roboto,sans-serif",
+                "reset": false
             },
             "themeState": {
                 "base-color": {
                     "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "#22c55e",
+                    "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "#0d0d0d",
+                    "edited": true
                 },
                 "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
+                    "value": "#0d0d0d",
+                    "edited": true
                 },
                 "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#121212",
+                    "edited": true
                 },
                 "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
+                    "value": "#f5f5f5",
+                    "edited": true
                 },
                 "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#262626",
+                    "edited": true
                 },
                 "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#151515",
+                    "edited": true
                 },
                 "widget-textColor": {
-                    "value": "#111111",
-                    "edited": false
+                    "value": "#f0f0f0",
+                    "edited": true
                 },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
-                    "edited": false
+                    "value": "#22c55e",
+                    "edited": true
                 },
                 "widget-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                    "value": "#151515",
+                    "edited": true
                 }
             },
             "angularTheme": {
-                "primary": "indigo",
-                "accents": "blue",
+                "primary": "green",
+                "accents": "green",
                 "warn": "red",
                 "background": "grey",
-                "palette": "light"
+                "palette": "dark"
             }
         },
         "site": {
-            "name": "Node-RED Dashboard",
+            "name": "Smart Home",
             "hideToolbar": "false",
             "allowSwipe": "false",
             "lockMenu": "false",
@@ -163,18 +129,18 @@
         "tab": "9b04c3fa896638e7",
         "order": 1,
         "disp": true,
-        "width": 6,
+        "width": 8,
         "collapse": false,
         "className": ""
     },
     {
         "id": "grpCamara",
         "type": "ui_group",
-        "name": "CÃ¡mara",
+        "name": "Cámara",
         "tab": "9b04c3fa896638e7",
         "order": 2,
         "disp": true,
-        "width": 6,
+        "width": 8,
         "collapse": false,
         "className": ""
     },
@@ -185,14 +151,71 @@
         "tab": "9b04c3fa896638e7",
         "order": 3,
         "disp": true,
-        "width": 6,
+        "width": 8,
         "collapse": false,
         "className": ""
     },
     {
-        "id": "3cc11d24.ff01a2",
+        "id": "254f8ecc2485a289",
+        "type": "tls-config",
+        "name": "SmartHome TLS",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "834ad0835709adb9",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mosquitto",
+        "port": "8883",
+        "tls": "254f8ecc2485a289",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "grpConsulta",
+        "type": "ui_group",
+        "name": "Consulta al hogar",
+        "tab": "9b04c3fa896638e7",
+        "order": 4,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0e9a71187b87c938",
         "type": "comment",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
         "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
         "x": 350,
@@ -200,9 +223,9 @@
         "wires": []
     },
     {
-        "id": "52ad945b1c70f1d5",
+        "id": "9d81b661170c8bd6",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/sensor_extra",
         "qos": "2",
@@ -216,43 +239,36 @@
         "y": 300,
         "wires": [
             [
-                "6638de5483e796ac",
-                "31a0f21ea672d0cb"
+                "b28be10a45023dd6",
+                "a719783a926d99b8"
             ]
         ]
     },
     {
-        "id": "6638de5483e796ac",
-        "type": "ui_gauge",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
+        "id": "b28be10a45023dd6",
+        "type": "ui_template",
+        "z": "25ad5c5be53da888",
         "group": "0502ac853b514fa6",
+        "name": "Nivel de audio",
         "order": 4,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Nivel de audio",
-        "label": "pp",
-        "format": "{{msg.payload.sensor_extra}}",
-        "min": 0,
-        "max": "1000",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
+        "width": 4,
+        "height": 3,
+        "format": "<div style=\"height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:12.5px;color:var(--sh-muted);margin-bottom:4px;letter-spacing:.3px;\">Nivel de audio</div><div style=\"position:relative;width:88%;max-width:180px;\"><svg viewBox=\"0 0 120 68\" style=\"width:100%;display:block;overflow:visible;\"><defs><linearGradient id=\"shg-audio-grad\" x1=\"0\" y1=\"1\" x2=\"1\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#22c55e\"/><stop offset=\"100%\" stop-color=\"#4ade80\"/></linearGradient></defs><path d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:var(--sh-chip-border);stroke-width:9;stroke-linecap:round\"/><path id=\"shg-audio-arc\" d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:url(#shg-audio-grad);stroke-width:9;stroke-linecap:round;stroke-dasharray:151;stroke-dashoffset:151;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)\"/></svg><div style=\"position:absolute;left:0;right:0;bottom:-2px;text-align:center;line-height:1;\"><span id=\"shg-audio-val\" style=\"font-size:24px;font-weight:700;color:var(--sh-text);font-variant-numeric:tabular-nums;\">--</span></div></div></div>\n<script>\n(function(scope) {\n  scope.$watch(\"msg\", function(m) {\n    if (!m || !m.payload) return;\n    var v = Number(m.payload.sensor_extra);\n    if (isNaN(v)) return;\n    var f = Math.max(0, Math.min(1, (v - 0) / (1000 - 0)));\n    var a = document.getElementById(\"shg-audio-arc\");\n    if (a) a.style.strokeDashoffset = String(151 * (1 - f));\n    var t = document.getElementById(\"shg-audio-val\");\n    if (t) t.textContent = v.toFixed(0);\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
         "x": 900,
         "y": 300,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "7a5313b7028874f4",
+        "id": "1d501241a86da053",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "cam/foto",
         "qos": "2",
@@ -266,14 +282,14 @@
         "y": 560,
         "wires": [
             [
-                "3512c18dfbe91a74"
+                "405ce28085e80294"
             ]
         ]
     },
     {
-        "id": "3512c18dfbe91a74",
+        "id": "405ce28085e80294",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "function 1",
         "func": "msg.payload = \"data:image/jpeg;base64,\" + msg.payload.toString('base64');\nreturn msg;\n",
         "outputs": 1,
@@ -286,20 +302,20 @@
         "y": 560,
         "wires": [
             [
-                "58a559c4b59b3dad"
+                "bc18d6b191ab480a"
             ]
         ]
     },
     {
-        "id": "58a559c4b59b3dad",
+        "id": "bc18d6b191ab480a",
         "type": "ui_template",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "group": "grpCamara",
         "name": "",
         "order": 1,
-        "width": "6",
-        "height": "6",
-        "format": "<img src=\"{{msg.payload}}\" style=\"width:100%\"/>",
+        "width": 8,
+        "height": 8,
+        "format": "<div style=\"width:100%;height:100%;display:flex;align-items:center;justify-content:center;\"><img ng-if=\"msg.payload\" src=\"{{msg.payload}}\" style=\"max-width:100%;max-height:100%;border-radius:10px;\"/><div ng-if=\"!msg.payload\" style=\"text-align:center;color:var(--sh-muted);font-size:13px;line-height:1.7;\"><svg width=\"44\" height=\"44\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"margin-bottom:8px;opacity:.7;\"><path style=\"fill:none;stroke:currentColor\" d=\"M3 8a2 2 0 0 1 2-2h1.5l1.2-1.8h8.6L17.5 6H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><circle style=\"fill:none;stroke:currentColor\" cx=\"12\" cy=\"12.5\" r=\"3.2\"/></svg><br/>Sin imagen todavía<br/>Pulsa «Capturar imagen»</div></div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -312,9 +328,9 @@
         ]
     },
     {
-        "id": "8a9da414b38e4b6b",
+        "id": "1fb42ef9637e33ff",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/temperatura",
         "qos": "2",
@@ -328,42 +344,35 @@
         "y": 760,
         "wires": [
             [
-                "d3d68a440ce5dcb8"
+                "55850a3fb29c452b"
             ]
         ]
     },
     {
-        "id": "d3d68a440ce5dcb8",
-        "type": "ui_gauge",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
+        "id": "55850a3fb29c452b",
+        "type": "ui_template",
+        "z": "25ad5c5be53da888",
         "group": "0502ac853b514fa6",
+        "name": "Temperatura",
         "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Temperatura",
-        "label": "Ã‚Â°C",
-        "format": "{{msg.payload.temperatura}}",
-        "min": 0,
-        "max": "50",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
+        "width": 4,
+        "height": 3,
+        "format": "<div style=\"height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:12.5px;color:var(--sh-muted);margin-bottom:4px;letter-spacing:.3px;\">Temperatura</div><div style=\"position:relative;width:88%;max-width:180px;\"><svg viewBox=\"0 0 120 68\" style=\"width:100%;display:block;overflow:visible;\"><defs><linearGradient id=\"shg-temp-grad\" x1=\"0\" y1=\"1\" x2=\"1\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#fb923c\"/><stop offset=\"100%\" stop-color=\"#fbbf24\"/></linearGradient></defs><path d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:var(--sh-chip-border);stroke-width:9;stroke-linecap:round\"/><path id=\"shg-temp-arc\" d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:url(#shg-temp-grad);stroke-width:9;stroke-linecap:round;stroke-dasharray:151;stroke-dashoffset:151;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)\"/></svg><div style=\"position:absolute;left:0;right:0;bottom:-2px;text-align:center;line-height:1;\"><span id=\"shg-temp-val\" style=\"font-size:24px;font-weight:700;color:var(--sh-text);font-variant-numeric:tabular-nums;\">--</span><span style=\"font-size:11px;color:var(--sh-muted);margin-left:2px;\">°C</span></div></div></div>\n<script>\n(function(scope) {\n  scope.$watch(\"msg\", function(m) {\n    if (!m || !m.payload) return;\n    var v = Number(m.payload.temperatura);\n    if (isNaN(v)) return;\n    var f = Math.max(0, Math.min(1, (v - 0) / (50 - 0)));\n    var a = document.getElementById(\"shg-temp-arc\");\n    if (a) a.style.strokeDashoffset = String(151 * (1 - f));\n    var t = document.getElementById(\"shg-temp-val\");\n    if (t) t.textContent = v.toFixed(1);\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
         "x": 850,
         "y": 760,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "9641faa0874ce9dd",
+        "id": "542275bdb4392e06",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/humedad",
         "qos": "2",
@@ -377,42 +386,35 @@
         "y": 1020,
         "wires": [
             [
-                "0b85d799066fd1a6"
+                "9e0fa507bf5c193a"
             ]
         ]
     },
     {
-        "id": "0b85d799066fd1a6",
-        "type": "ui_gauge",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
+        "id": "9e0fa507bf5c193a",
+        "type": "ui_template",
+        "z": "25ad5c5be53da888",
         "group": "0502ac853b514fa6",
+        "name": "Humedad",
         "order": 2,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Humedad",
-        "label": "%",
-        "format": "{{msg.payload.humedad}}",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
+        "width": 4,
+        "height": 3,
+        "format": "<div style=\"height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:12.5px;color:var(--sh-muted);margin-bottom:4px;letter-spacing:.3px;\">Humedad</div><div style=\"position:relative;width:88%;max-width:180px;\"><svg viewBox=\"0 0 120 68\" style=\"width:100%;display:block;overflow:visible;\"><defs><linearGradient id=\"shg-hum-grad\" x1=\"0\" y1=\"1\" x2=\"1\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#38bdf8\"/><stop offset=\"100%\" stop-color=\"#22d3ee\"/></linearGradient></defs><path d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:var(--sh-chip-border);stroke-width:9;stroke-linecap:round\"/><path id=\"shg-hum-arc\" d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:url(#shg-hum-grad);stroke-width:9;stroke-linecap:round;stroke-dasharray:151;stroke-dashoffset:151;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)\"/></svg><div style=\"position:absolute;left:0;right:0;bottom:-2px;text-align:center;line-height:1;\"><span id=\"shg-hum-val\" style=\"font-size:24px;font-weight:700;color:var(--sh-text);font-variant-numeric:tabular-nums;\">--</span><span style=\"font-size:11px;color:var(--sh-muted);margin-left:2px;\">%</span></div></div></div>\n<script>\n(function(scope) {\n  scope.$watch(\"msg\", function(m) {\n    if (!m || !m.payload) return;\n    var v = Number(m.payload.humedad);\n    if (isNaN(v)) return;\n    var f = Math.max(0, Math.min(1, (v - 0) / (100 - 0)));\n    var a = document.getElementById(\"shg-hum-arc\");\n    if (a) a.style.strokeDashoffset = String(151 * (1 - f));\n    var t = document.getElementById(\"shg-hum-val\");\n    if (t) t.textContent = v.toFixed(0);\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
         "x": 840,
         "y": 1020,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "db8f73b0f7a46196",
+        "id": "7177e688fb6337de",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/presion",
         "qos": "2",
@@ -426,42 +428,35 @@
         "y": 1120,
         "wires": [
             [
-                "ac1d7a83c02d16d1"
+                "2b4884ba84517747"
             ]
         ]
     },
     {
-        "id": "ac1d7a83c02d16d1",
-        "type": "ui_gauge",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
+        "id": "2b4884ba84517747",
+        "type": "ui_template",
+        "z": "25ad5c5be53da888",
         "group": "0502ac853b514fa6",
+        "name": "Presión",
         "order": 3,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Presion",
-        "label": "hPa",
-        "format": "{{msg.payload.presion}}",
-        "min": "900",
-        "max": "1100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
+        "width": 4,
+        "height": 3,
+        "format": "<div style=\"height:100%;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;\"><div style=\"font-size:12.5px;color:var(--sh-muted);margin-bottom:4px;letter-spacing:.3px;\">Presión</div><div style=\"position:relative;width:88%;max-width:180px;\"><svg viewBox=\"0 0 120 68\" style=\"width:100%;display:block;overflow:visible;\"><defs><linearGradient id=\"shg-pres-grad\" x1=\"0\" y1=\"1\" x2=\"1\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#a78bfa\"/><stop offset=\"100%\" stop-color=\"#818cf8\"/></linearGradient></defs><path d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:var(--sh-chip-border);stroke-width:9;stroke-linecap:round\"/><path id=\"shg-pres-arc\" d=\"M12 62 A 48 48 0 0 1 108 62\" style=\"fill:none;stroke:url(#shg-pres-grad);stroke-width:9;stroke-linecap:round;stroke-dasharray:151;stroke-dashoffset:151;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)\"/></svg><div style=\"position:absolute;left:0;right:0;bottom:-2px;text-align:center;line-height:1;\"><span id=\"shg-pres-val\" style=\"font-size:24px;font-weight:700;color:var(--sh-text);font-variant-numeric:tabular-nums;\">--</span><span style=\"font-size:11px;color:var(--sh-muted);margin-left:2px;\">hPa</span></div></div></div>\n<script>\n(function(scope) {\n  scope.$watch(\"msg\", function(m) {\n    if (!m || !m.payload) return;\n    var v = Number(m.payload.presion);\n    if (isNaN(v)) return;\n    var f = Math.max(0, Math.min(1, (v - 900) / (1100 - 900)));\n    var a = document.getElementById(\"shg-pres-arc\");\n    if (a) a.style.strokeDashoffset = String(151 * (1 - f));\n    var t = document.getElementById(\"shg-pres-val\");\n    if (t) t.textContent = v.toFixed(0);\n  });\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
         "x": 840,
         "y": 1120,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "499025c4b2a14647",
+        "id": "ed93170481f2a99b",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "cam/foto",
         "qos": "2",
@@ -475,14 +470,14 @@
         "y": 660,
         "wires": [
             [
-                "10c6dc662bd73884"
+                "ce36df63d2ff0445"
             ]
         ]
     },
     {
-        "id": "4640e9bf00ce4c5a",
+        "id": "1849854e1f3ed00d",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "check persona",
         "func": "const personas = msg.payload.filter(d => d.class === 'person' && d.score > 0.7);\n\nif (personas.length > 0) {\n    msg.payload = \"SI - \" + Math.round(personas[0].score * 100) + \"%\";\n    msg.detectado = true;\n} else {\n    msg.payload = \"NO\";\n    msg.detectado = false;\n}\nreturn msg;\n",
         "outputs": 1,
@@ -495,23 +490,23 @@
         "y": 660,
         "wires": [
             [
-                "7d80d6aa8b67d42f",
-                "979f68a115d79579"
+                "e77b09e286dcbcae",
+                "ce8a2eeed054a3d7"
             ]
         ]
     },
     {
-        "id": "7d80d6aa8b67d42f",
+        "id": "e77b09e286dcbcae",
         "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "group": "grpCamara",
         "order": 2,
-        "width": 0,
-        "height": 0,
+        "width": 4,
+        "height": 2,
         "name": "",
-        "label": "Persona Detectada",
+        "label": "Detección",
         "format": "{{msg.payload}}",
-        "layout": "row-spread",
+        "layout": "col-center",
         "className": "",
         "style": false,
         "font": "",
@@ -522,9 +517,9 @@
         "wires": []
     },
     {
-        "id": "10c6dc662bd73884",
+        "id": "ce36df63d2ff0445",
         "type": "tensorflowCoco",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "modelUrl": "http://localhost:1880/coco/model.json",
         "scoreThreshold": 0.5,
@@ -534,15 +529,15 @@
         "y": 660,
         "wires": [
             [
-                "4640e9bf00ce4c5a",
-                "562a485d57caf195"
+                "1849854e1f3ed00d",
+                "f167691286e40cb3"
             ]
         ]
     },
     {
-        "id": "979f68a115d79579",
+        "id": "ce8a2eeed054a3d7",
         "type": "switch",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "property": "detectado",
         "propertyType": "msg",
@@ -560,14 +555,14 @@
         "y": 720,
         "wires": [
             [
-                "a75f53b5de36cbec"
+                "3445cce49ea10fed"
             ]
         ]
     },
     {
-        "id": "a75f53b5de36cbec",
+        "id": "3445cce49ea10fed",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/camara/evento",
         "qos": "",
@@ -583,9 +578,9 @@
         "wires": []
     },
     {
-        "id": "b0ebd2e7352bc074",
+        "id": "fb5cf97ac9eb2626",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/sensor_extra",
         "qos": "2",
@@ -599,14 +594,15 @@
         "y": 380,
         "wires": [
             [
-                "ba73dda3c6d5d86e"
+                "83c15a2f127892ed"
             ]
         ]
     },
     {
-        "id": "ba73dda3c6d5d86e",
+        "id": "83c15a2f127892ed",
         "type": "switch",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
+        "d": true,
         "name": "",
         "property": "payload.sensor_extra",
         "propertyType": "msg",
@@ -624,14 +620,14 @@
         "y": 380,
         "wires": [
             [
-                "9e6e51b0c4161e54"
+                "f3e226c3c3526b32"
             ]
         ]
     },
     {
-        "id": "9e6e51b0c4161e54",
+        "id": "f3e226c3c3526b32",
         "type": "change",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "rules": [
             {
@@ -651,36 +647,14 @@
         "y": 380,
         "wires": [
             [
-                "1c6b9304f2752925",
-                "b5239a04d2745101"
+                "ab28fcd367ee22ad"
             ]
         ]
     },
     {
-        "id": "1c6b9304f2752925",
-        "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
-        "group": "grpControl",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Alerta",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 1270,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "b5239a04d2745101",
+        "id": "ab28fcd367ee22ad",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/alerta",
         "qos": "",
@@ -691,14 +665,14 @@
         "correl": "",
         "expiry": "",
         "broker": "834ad0835709adb9",
-        "x": 1340,
-        "y": 460,
+        "x": 1280,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "d79cce38027abc1a",
+        "id": "8b4abaafeca16c46",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/temperatura",
         "qos": "2",
@@ -709,17 +683,18 @@
         "rh": 0,
         "inputs": 0,
         "x": 560,
-        "y": 880,
+        "y": 840,
         "wires": [
             [
-                "b43a202bbf87200c"
+                "774869d1fff0c12d"
             ]
         ]
     },
     {
-        "id": "b43a202bbf87200c",
+        "id": "774869d1fff0c12d",
         "type": "switch",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
+        "d": true,
         "name": "",
         "property": "payload.temperatura",
         "propertyType": "msg",
@@ -734,17 +709,17 @@
         "repair": false,
         "outputs": 1,
         "x": 830,
-        "y": 880,
+        "y": 840,
         "wires": [
             [
-                "989a68b1c8e58fb7"
+                "4d4de540357b7545"
             ]
         ]
     },
     {
-        "id": "989a68b1c8e58fb7",
+        "id": "4d4de540357b7545",
         "type": "change",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "rules": [
             {
@@ -761,39 +736,17 @@
         "to": "",
         "reg": false,
         "x": 1020,
-        "y": 880,
+        "y": 840,
         "wires": [
             [
-                "db57eaab1e9e4a78",
-                "0b2cfb30ea6ea212"
+                "e826eda71830240e"
             ]
         ]
     },
     {
-        "id": "db57eaab1e9e4a78",
-        "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
-        "group": "grpControl",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Alerta",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 1270,
-        "y": 880,
-        "wires": []
-    },
-    {
-        "id": "0b2cfb30ea6ea212",
+        "id": "e826eda71830240e",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "topic": "smarthome/equipo01/alerta",
         "qos": "",
@@ -804,14 +757,14 @@
         "correl": "",
         "expiry": "",
         "broker": "834ad0835709adb9",
-        "x": 1340,
-        "y": 960,
+        "x": 1280,
+        "y": 840,
         "wires": []
     },
     {
-        "id": "562a485d57caf195",
+        "id": "f167691286e40cb3",
         "type": "debug",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -826,9 +779,9 @@
         "wires": []
     },
     {
-        "id": "f1cam01",
+        "id": "c31e83aba06704ba",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "cam/foto (facial)",
         "topic": "cam/foto",
         "qos": "2",
@@ -842,14 +795,14 @@
         "y": 920,
         "wires": [
             [
-                "f1face01"
+                "f81f64e6fc429295"
             ]
         ]
     },
     {
-        "id": "f1face01",
+        "id": "f81f64e6fc429295",
         "type": "http request",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "face-service identify",
         "method": "POST",
         "ret": "obj",
@@ -866,14 +819,14 @@
         "y": 920,
         "wires": [
             [
-                "f1fn01"
+                "d0cae0642666775f"
             ]
         ]
     },
     {
-        "id": "f1fn01",
+        "id": "d0cae0642666775f",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "filtrar + notificar",
         "func": "const r = msg.payload;\nlet dashText;\nlet telegramMsg = null;\n\nif (!r.persona || r.nombre === \"sin_cara\") {\n    dashText = \"sin cara\";\n} else if (r.nombre === \"desconocido\") {\n    dashText = \"desconocido\";\n} else {\n    // persona conocida\n    dashText = r.nombre + \" (\" + r.confianza + \"%)\";\n    flow.set(\"persona_text\", r.nombre);\n    flow.set(\"persona_time\", Date.now());\n    const ahora = Date.now();\n    const COOLDOWN = 60000; // 60s por persona para no spamear\n    const last = flow.get(\"notif_\" + r.nombre) || 0;\n    if (ahora - last >= COOLDOWN) {\n        flow.set(\"notif_\" + r.nombre, ahora);\n        const ts = new Date().toLocaleString(\"es-CL\");\n        telegramMsg = {\n            headers: { \"Content-Type\": \"application/json\" },\n            payload: {\n                chat_id: 0,\n                text: \"ALERTA SmartHome\\nEvento: persona detectada\\nPersona: \" + r.nombre +\n                      \" (\" + r.confianza + \"%)\\nHora: \" + ts\n            }\n        };\n    }\n}\n\nreturn [telegramMsg, { payload: dashText }];",
         "outputs": 2,
@@ -886,17 +839,17 @@
         "y": 920,
         "wires": [
             [
-                "f1tg01"
+                "d76db0f2b2d9d1b7"
             ],
             [
-                "f1txt01"
+                "31696e8a41eb3788"
             ]
         ]
     },
     {
-        "id": "f1tg01",
+        "id": "d76db0f2b2d9d1b7",
         "type": "http request",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "Telegram sendMessage",
         "method": "POST",
         "ret": "obj",
@@ -916,26 +869,26 @@
         ]
     },
     {
-        "id": "f1txt01",
+        "id": "31696e8a41eb3788",
         "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "group": "grpCamara",
         "order": 3,
-        "width": 0,
-        "height": 0,
+        "width": 4,
+        "height": 2,
         "name": "",
-        "label": "Persona identificada",
+        "label": "Identidad",
         "format": "{{msg.payload}}",
-        "layout": "row-spread",
+        "layout": "col-center",
         "className": "",
         "x": 880,
         "y": 940,
         "wires": []
     },
     {
-        "id": "csvT",
+        "id": "9eabef8ae504eeb8",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "csv: temperatura",
         "topic": "smarthome/equipo01/temperatura",
         "qos": "2",
@@ -949,14 +902,14 @@
         "y": 1100,
         "wires": [
             [
-                "csvStore"
+                "9edd394584d1fc7a"
             ]
         ]
     },
     {
-        "id": "csvH",
+        "id": "3a547c2a82246e42",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "csv: humedad",
         "topic": "smarthome/equipo01/humedad",
         "qos": "2",
@@ -970,14 +923,14 @@
         "y": 1140,
         "wires": [
             [
-                "csvStore"
+                "9edd394584d1fc7a"
             ]
         ]
     },
     {
-        "id": "csvP",
+        "id": "04dfc87b93f603cb",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "csv: presion",
         "topic": "smarthome/equipo01/presion",
         "qos": "2",
@@ -991,14 +944,14 @@
         "y": 1180,
         "wires": [
             [
-                "csvStore"
+                "9edd394584d1fc7a"
             ]
         ]
     },
     {
-        "id": "csvX",
+        "id": "23f05b00eddd2a64",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "csv: sensor_extra",
         "topic": "smarthome/equipo01/sensor_extra",
         "qos": "2",
@@ -1012,14 +965,14 @@
         "y": 1220,
         "wires": [
             [
-                "csvStore"
+                "9edd394584d1fc7a"
             ]
         ]
     },
     {
-        "id": "csvAL",
+        "id": "519171e6e4ac03e9",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "csv: alerta",
         "topic": "smarthome/equipo01/alerta",
         "qos": "2",
@@ -1033,14 +986,14 @@
         "y": 1260,
         "wires": [
             [
-                "csvStore"
+                "9edd394584d1fc7a"
             ]
         ]
     },
     {
-        "id": "csvStore",
+        "id": "9edd394584d1fc7a",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "guardar en contexto",
         "func": "let p = msg.payload;\nif (Buffer.isBuffer(p)) p = p.toString();\nif (typeof p === \"string\") { try { p = JSON.parse(p); } catch (e) { /* alerta es texto plano */ } }\nconst t = msg.topic || \"\";\nif (t.endsWith(\"/temperatura\") && p && p.temperatura !== undefined) flow.set(\"temperatura\", p.temperatura);\nelse if (t.endsWith(\"/humedad\") && p && p.humedad !== undefined) flow.set(\"humedad\", p.humedad);\nelse if (t.endsWith(\"/presion\") && p && p.presion !== undefined) flow.set(\"presion\", p.presion);\nelse if (t.endsWith(\"/sensor_extra\") && p && p.sensor_extra !== undefined) flow.set(\"sensor_extra\", p.sensor_extra);\nelse if (t.endsWith(\"/alerta\")) { flow.set(\"alerta_text\", typeof p === \"string\" ? p : JSON.stringify(p)); flow.set(\"alerta_time\", Date.now()); }\nreturn null;",
         "outputs": 1,
@@ -1056,9 +1009,9 @@
         ]
     },
     {
-        "id": "csvTick",
+        "id": "af76f4250ae5be7c",
         "type": "inject",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "cada 10s",
         "props": [
             {
@@ -1076,14 +1029,14 @@
         "y": 1340,
         "wires": [
             [
-                "csvBuild"
+                "2ae712b1a1e4f6fe"
             ]
         ]
     },
     {
-        "id": "csvBuild",
+        "id": "2ae712b1a1e4f6fe",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "armar registro",
         "func": "const temperatura = flow.get(\"temperatura\");\nconst humedad = flow.get(\"humedad\");\nconst presion = flow.get(\"presion\");\nconst sensor_extra = flow.get(\"sensor_extra\");\n// no escribir fila si todavia no llego ningun dato de sensores\nif (temperatura === undefined && humedad === undefined && presion === undefined && sensor_extra === undefined) {\n    return null;\n}\nconst at = flow.get(\"alerta_time\") || 0;\nconst alerta = (Date.now() - at < 15000) ? (flow.get(\"alerta_text\") || \"normal\") : \"normal\";\nconst pt = flow.get(\"persona_time\") || 0;\nconst persona = (Date.now() - pt < 15000) ? (flow.get(\"persona_text\") || \"ninguna\") : \"ninguna\";\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    temperatura: temperatura,\n    humedad: humedad,\n    presion: presion,\n    sensor_extra: sensor_extra,\n    alerta: alerta,\n    persona: persona\n};\nreturn msg;",
         "outputs": 1,
@@ -1096,14 +1049,14 @@
         "y": 1340,
         "wires": [
             [
-                "csvConv"
+                "a88794a5143aee82"
             ]
         ]
     },
     {
-        "id": "csvConv",
+        "id": "a88794a5143aee82",
         "type": "csv",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "sep": ",",
         "hdrin": "",
@@ -1119,14 +1072,14 @@
         "y": 1340,
         "wires": [
             [
-                "csvFile"
+                "07ce379525044eb7"
             ]
         ]
     },
     {
-        "id": "csvFile",
+        "id": "07ce379525044eb7",
         "type": "file",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "registro.csv",
         "filename": "/data/datos/registro.csv",
         "filenameType": "str",
@@ -1141,9 +1094,9 @@
         ]
     },
     {
-        "id": "dbChartMqtt",
+        "id": "071acca149eb4fc3",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "chart: temperatura",
         "topic": "smarthome/equipo01/temperatura",
         "qos": "2",
@@ -1157,14 +1110,14 @@
         "y": 1460,
         "wires": [
             [
-                "dbChartFn"
+                "1389516825c0650b"
             ]
         ]
     },
     {
-        "id": "dbChartFn",
+        "id": "1389516825c0650b",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "a numero",
         "func": "let p = msg.payload;\nif (Buffer.isBuffer(p)) p = p.toString();\nif (typeof p === \"string\") { try { p = JSON.parse(p); } catch (e) {} }\nif (!p || p.temperatura === undefined) return null;\nmsg.payload = p.temperatura;\nreturn msg;",
         "outputs": 1,
@@ -1177,20 +1130,20 @@
         "y": 1460,
         "wires": [
             [
-                "dbChart"
+                "df3565a53de516bd"
             ]
         ]
     },
     {
-        "id": "dbChart",
+        "id": "df3565a53de516bd",
         "type": "ui_chart",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "Temperatura historico",
         "group": "0502ac853b514fa6",
         "order": 5,
-        "width": 0,
-        "height": 0,
-        "label": "Temperatura (Â°C) - historico",
+        "width": 8,
+        "height": 5,
+        "label": "Histórico de temperatura (°C)",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -1206,7 +1159,7 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
+            "#22c55e",
             "#aec7e8",
             "#ff7f0e",
             "#2ca02c",
@@ -1226,21 +1179,21 @@
         ]
     },
     {
-        "id": "dbCapBtn",
+        "id": "88099ad53bdec4d4",
         "type": "ui_button",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "group": "grpCamara",
         "order": 4,
-        "width": 0,
-        "height": 0,
+        "width": 8,
+        "height": 1,
         "passthru": false,
         "label": "Capturar imagen",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
         "className": "",
-        "icon": "",
+        "icon": "camera_alt",
         "payload": "capturar",
         "payloadType": "str",
         "topic": "smarthome/equipo01/camara/captura",
@@ -1249,14 +1202,14 @@
         "y": 1540,
         "wires": [
             [
-                "dbCapOut"
+                "f35e6a16f720f07c"
             ]
         ]
     },
     {
-        "id": "dbCapOut",
+        "id": "f35e6a16f720f07c",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "captura manual",
         "topic": "smarthome/equipo01/camara/captura",
         "qos": "0",
@@ -1272,16 +1225,16 @@
         "wires": []
     },
     {
-        "id": "dbLedSwitch",
+        "id": "45fbe11927dad3e5",
         "type": "ui_switch",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "",
         "label": "LED manual",
         "tooltip": "",
         "group": "grpControl",
-        "order": 4,
-        "width": 0,
-        "height": 0,
+        "order": 2,
+        "width": 4,
+        "height": 1,
         "passthru": true,
         "decouple": "false",
         "topic": "smarthome/equipo01/control/led",
@@ -1301,15 +1254,15 @@
         "y": 1600,
         "wires": [
             [
-                "dbLedOut",
-                "dbLedFn"
+                "929e007c549d0d1e",
+                "e55ffafe8563f429"
             ]
         ]
     },
     {
-        "id": "dbLedOut",
+        "id": "929e007c549d0d1e",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "control LED",
         "topic": "smarthome/equipo01/control/led",
         "qos": "0",
@@ -1325,11 +1278,11 @@
         "wires": []
     },
     {
-        "id": "dbLedFn",
+        "id": "e55ffafe8563f429",
         "type": "function",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "estado LED",
-        "func": "msg.payload = (msg.payload === \"on\") ? \"ðŸ”´ Encendido\" : \"âš« Apagado\";\nreturn msg;",
+        "func": "msg.payload = (msg.payload === \"on\") ? \"Encendido\" : \"Apagado\";\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1340,93 +1293,31 @@
         "y": 1620,
         "wires": [
             [
-                "dbLedTxt"
+                "718b04106c25ec67"
             ]
         ]
     },
     {
-        "id": "dbLedTxt",
+        "id": "718b04106c25ec67",
         "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "group": "grpControl",
-        "order": 5,
-        "width": 0,
-        "height": 0,
+        "order": 3,
+        "width": 4,
+        "height": 1,
         "name": "",
         "label": "Estado LED",
         "format": "{{msg.payload}}",
-        "layout": "row-spread",
+        "layout": "col-center",
         "className": "",
         "x": 660,
         "y": 1620,
         "wires": []
     },
     {
-        "id": "dbStTick",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "cada 1s",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 1680,
-        "wires": [
-            [
-                "dbStFn"
-            ]
-        ]
-    },
-    {
-        "id": "dbStFn",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "estado sistema",
-        "func": "const now = Date.now();\nconst at = flow.get(\"alerta_time\") || 0;\nconst pt = flow.get(\"persona_time\") || 0;\nlet estado;\nif (now - at < 4000) {\n    estado = \"ðŸ”´ \" + (flow.get(\"alerta_text\") || \"ALERTA\");\n} else if (now - pt < 6000) {\n    estado = \"ðŸŸ¡ Persona: \" + (flow.get(\"persona_text\") || \"\");\n} else {\n    estado = \"ðŸŸ¢ Normal\";\n}\nmsg.payload = estado;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 1680,
-        "wires": [
-            [
-                "dbStTxt"
-            ]
-        ]
-    },
-    {
-        "id": "dbStTxt",
-        "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
-        "group": "grpControl",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Estado del sistema",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 650,
-        "y": 1680,
-        "wires": []
-    },
-    {
-        "id": "31a0f21ea672d0cb",
+        "id": "a719783a926d99b8",
         "type": "debug",
-        "z": "f6f2187d.f17ca8",
+        "z": "25ad5c5be53da888",
         "name": "debug 2",
         "active": true,
         "tosidebar": true,
@@ -1439,5 +1330,495 @@
         "x": 840,
         "y": 240,
         "wires": []
+    },
+    {
+        "id": "css_smarthome_head",
+        "type": "ui_template",
+        "z": "25ad5c5be53da888",
+        "group": "",
+        "name": "CSS SmartHome",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');\n\nbody.nr-dashboard-theme {\n  --sh-bg: #0d0d0d;\n  --sh-card: #151515;\n  --sh-border: #262626;\n  --sh-chip: #1b1b1b;\n  --sh-chip-border: #272727;\n  --sh-text: #f5f5f5;\n  --sh-muted: #9ca3af;\n  --sh-accent: #22c55e;\n  --sh-accent-soft: rgba(34,197,94,.45);\n  --sh-btn: #1e1e1e;\n  --sh-btn-border: #2e2e2e;\n  --sh-btn-hover: #242424;\n  --sh-glow: rgba(34,197,94,.05);\n}\nbody.nr-dashboard-theme.sh-light {\n  --sh-bg: #f4f5f7;\n  --sh-card: #ffffff;\n  --sh-border: #e5e7eb;\n  --sh-chip: #f6f7f9;\n  --sh-chip-border: #e8eaee;\n  --sh-text: #111827;\n  --sh-muted: #6b7280;\n  --sh-accent: #16a34a;\n  --sh-accent-soft: rgba(22,163,74,.4);\n  --sh-btn: #ffffff;\n  --sh-btn-border: #d1d5db;\n  --sh-btn-hover: #f3f4f6;\n  --sh-glow: rgba(34,197,94,.08);\n}\n\nbody.nr-dashboard-theme,\nbody.nr-dashboard-theme * {\n  font-family: 'Plus Jakarta Sans','Segoe UI',Roboto,sans-serif;\n  -webkit-font-smoothing: antialiased;\n}\n\nbody.nr-dashboard-theme {\n  background:\n    radial-gradient(900px 420px at 80% -5%, var(--sh-glow), transparent 60%),\n    radial-gradient(700px 400px at -5% 105%, var(--sh-glow), transparent 55%),\n    var(--sh-bg) !important;\n}\n\n::selection { background: rgba(34,197,94,.30); }\n::-webkit-scrollbar { width: 10px; height: 10px; }\n::-webkit-scrollbar-thumb { background: var(--sh-btn-border); border-radius: 8px; }\n::-webkit-scrollbar-track { background: transparent; }\n\n/* Barra superior */\nbody.nr-dashboard-theme md-toolbar,\n#nr-dashboard-toolbar {\n  background: var(--sh-bg) !important;\n  border-bottom: 1px solid var(--sh-border);\n  box-shadow: none !important;\n}\n#nr-dashboard-toolbar .md-toolbar-tools { color: var(--sh-text) !important; filter: none !important; }\n#nr-dashboard-toolbar h1 {\n  color: var(--sh-text) !important;\n  font-weight: 700;\n  font-size: 19px;\n  letter-spacing: .2px;\n}\n\n/* Reloj */\n#sh-clock {\n  position: fixed;\n  top: 9px;\n  right: 64px;\n  z-index: 9999;\n  height: 40px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  justify-content: center;\n  line-height: 1.15;\n  pointer-events: none;\n}\n#sh-clock .sh-clock-t {\n  font-size: 15px;\n  font-weight: 700;\n  color: var(--sh-text);\n  font-variant-numeric: tabular-nums;\n}\n#sh-clock .sh-clock-d {\n  font-size: 10.5px;\n  color: var(--sh-muted);\n  text-transform: capitalize;\n}\n\n/* Tarjetas de grupo */\nbody.nr-dashboard-theme ui-card-panel {\n  background-color: var(--sh-card) !important;\n  border: 1px solid var(--sh-border) !important;\n  border-radius: 16px;\n  overflow: hidden;\n}\nbody.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle,\n.nr-dashboard-cardtitle {\n  color: var(--sh-text) !important;\n  font-weight: 600;\n  font-size: 14.5px;\n  letter-spacing: .3px;\n  display: flex;\n  align-items: center;\n  gap: 9px;\n}\n.nr-dashboard-cardtitle::before {\n  content: '';\n  flex: none;\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: var(--sh-accent);\n  box-shadow: 0 0 8px var(--sh-accent-soft);\n}\n\n/* Widgets: chips sutiles con hover discreto */\nbody.nr-dashboard-theme md-content md-card {\n  background-color: var(--sh-chip) !important;\n  color: var(--sh-text) !important;\n  border: 1px solid var(--sh-chip-border);\n  border-radius: 12px !important;\n  box-shadow: none;\n  transition: border-color .25s ease;\n}\nbody.nr-dashboard-theme md-content md-card:hover { border-color: var(--sh-btn-border); }\n\n/* Menu lateral */\nbody.nr-dashboard-theme md-sidenav { background-color: var(--sh-card) !important; }\nbody.nr-dashboard-theme md-sidenav div.md-list-item-inner { color: var(--sh-text) !important; }\n\n/* Botones base (fantasma) */\nbody.nr-dashboard-theme .nr-dashboard-button .md-button,\nbody.nr-dashboard-theme .nr-dashboard-form .md-button,\nbody.nr-dashboard-theme .nr-dashboard-form-button {\n  background: var(--sh-btn) !important;\n  color: var(--sh-text) !important;\n  border: 1px solid var(--sh-btn-border);\n  border-radius: 10px !important;\n  font-weight: 600;\n  letter-spacing: .4px;\n  box-shadow: none !important;\n  transition: background .2s ease, border-color .2s ease, filter .2s ease;\n}\nbody.nr-dashboard-theme .nr-dashboard-button .md-button:hover,\nbody.nr-dashboard-theme .nr-dashboard-form .md-button:hover,\nbody.nr-dashboard-theme .nr-dashboard-form-button:hover {\n  background: var(--sh-btn-hover) !important;\n  border-color: var(--sh-accent-soft);\n}\n\n/* CTAs primarios en verde: Capturar imagen y Preguntar */\nbody.nr-dashboard-theme .nr-dashboard-button .md-button,\nbody.nr-dashboard-theme .nr-dashboard-form .md-button.md-primary {\n  background: linear-gradient(135deg, #16a34a, #22c55e) !important;\n  color: #ffffff !important;\n  border-color: transparent;\n}\nbody.nr-dashboard-theme .nr-dashboard-button .md-button:hover,\nbody.nr-dashboard-theme .nr-dashboard-form .md-button.md-primary:hover {\n  background: linear-gradient(135deg, #16a34a, #22c55e) !important;\n  filter: brightness(1.12);\n  border-color: transparent;\n}\n\n/* Icono de botones */\nbody.nr-dashboard-theme .nr-dashboard-button .md-button svg path { fill: currentColor !important; }\n\n/* Textos de estado */\nbody.nr-dashboard-theme .nr-dashboard-text p.label { color: var(--sh-muted) !important; font-size: 12px; }\nbody.nr-dashboard-theme .nr-dashboard-text .value {\n  color: var(--sh-text) !important;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\nbody.nr-dashboard-theme .nr-dashboard-switch p { color: var(--sh-text) !important; }\n\n/* Formulario */\nbody.nr-dashboard-theme .nr-dashboard-form form md-input-container input {\n  color: var(--sh-text) !important;\n  border-color: var(--sh-btn-border) !important;\n}\nbody.nr-dashboard-theme .nr-dashboard-form form md-input-container label,\nbody.nr-dashboard-theme .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label {\n  color: var(--sh-muted) !important;\n}\nbody.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input {\n  border-color: var(--sh-accent) !important;\n}\nbody.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label {\n  color: var(--sh-accent) !important;\n}\nbody.nr-dashboard-theme md-content .nr-dashboard-form form .md-input-invalid label { color: var(--sh-muted) !important; }\nbody.nr-dashboard-theme .nr-dashboard-form form .md-input-invalid input { border-color: var(--sh-btn-border) !important; }\n\n/* Switch */\nbody.nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-bar { background-color: var(--sh-accent-soft) !important; }\nbody.nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-thumb { background-color: var(--sh-accent) !important; }\n\n/* Gauges y grafica */\nbody.nr-dashboard-theme .nr-dashboard-gauge text,\nbody.nr-dashboard-theme .nr-dashboard-gauge svg text { fill: var(--sh-text) !important; }\nbody.nr-dashboard-theme .nr-dashboard-chart svg text { fill: var(--sh-muted) !important; }\nbody.nr-dashboard-theme .nr-dashboard-chart svg .nv-axis path { stroke: transparent !important; }\nbody.nr-dashboard-theme .nr-dashboard-chart svg .nv-axis .tick line {\n  stroke: var(--sh-border) !important;\n  stroke-dasharray: 3 5;\n}\nbody.nr-dashboard-theme .nr-dashboard-chart .nv-groups .nv-line { stroke-width: 2.5px; }\n\n/* Plantillas transparentes (heredan el chip) */\nbody.nr-dashboard-theme .nr-dashboard-template { background-color: transparent !important; }\nbody.nr-dashboard-theme .nr-dashboard-template p,\nbody.nr-dashboard-theme .nr-dashboard-template h1,\nbody.nr-dashboard-theme .nr-dashboard-template h2,\nbody.nr-dashboard-theme .nr-dashboard-template h3,\nbody.nr-dashboard-theme .nr-dashboard-template h4 {\n  color: var(--sh-text) !important;\n  background-color: transparent !important;\n}\n\n/* Boton de tema */\n#sh-theme-toggle {\n  position: fixed;\n  top: 10px;\n  right: 14px;\n  z-index: 9999;\n  width: 38px;\n  height: 38px;\n  border-radius: 10px;\n  background: var(--sh-btn);\n  border: 1px solid var(--sh-btn-border);\n  color: var(--sh-muted);\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 0;\n  transition: color .2s ease, border-color .2s ease;\n}\n#sh-theme-toggle:hover { color: var(--sh-text); border-color: var(--sh-accent-soft); }\n#sh-theme-toggle svg { display: block; }\n</style>\n<script>\n(function () {\n  var SUN = '<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/></svg>';\n  var MOON = '<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>';\n\n  function setMode(light, btn) {\n    document.body.classList.toggle('sh-light', light);\n    try { localStorage.setItem('sh-theme', light ? 'light' : 'dark'); } catch (e) {}\n    if (btn) btn.innerHTML = light ? MOON : SUN;\n    if (btn) btn.title = light ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro';\n  }\n\n  function tickClock() {\n    var el = document.getElementById('sh-clock');\n    if (!el) return;\n    var d = new Date();\n    el.children[0].textContent = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });\n    el.children[1].textContent = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });\n  }\n\n  function init() {\n    if (!document.body || document.getElementById('sh-theme-toggle')) return;\n    var light = false;\n    try { light = localStorage.getItem('sh-theme') === 'light'; } catch (e) {}\n\n    var btn = document.createElement('button');\n    btn.id = 'sh-theme-toggle';\n    btn.addEventListener('click', function () {\n      setMode(!document.body.classList.contains('sh-light'), btn);\n    });\n    document.body.appendChild(btn);\n    setMode(light, btn);\n\n    var clk = document.createElement('div');\n    clk.id = 'sh-clock';\n    clk.innerHTML = '<span class=\"sh-clock-t\"></span><span class=\"sh-clock-d\"></span>';\n    document.body.appendChild(clk);\n    tickClock();\n    setInterval(tickClock, 15000);\n  }\n\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', init);\n  } else {\n    init();\n  }\n  var tries = 0;\n  var t = setInterval(function () {\n    init();\n    if (++tries > 20 || document.getElementById('sh-theme-toggle')) clearInterval(t);\n  }, 500);\n})();\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 120,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b8e4441dd2568f10",
+        "type": "mqtt in",
+        "z": "4a1a66b1f3341ffc",
+        "name": "temperatura",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "154674ac8b3984fd"
+            ]
+        ]
+    },
+    {
+        "id": "e743b3356653a7ef",
+        "type": "mqtt in",
+        "z": "4a1a66b1f3341ffc",
+        "name": "humedad",
+        "topic": "smarthome/equipo01/humedad",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "154674ac8b3984fd"
+            ]
+        ]
+    },
+    {
+        "id": "1be40f28554bdb3e",
+        "type": "mqtt in",
+        "z": "4a1a66b1f3341ffc",
+        "name": "presion",
+        "topic": "smarthome/equipo01/presion",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "154674ac8b3984fd"
+            ]
+        ]
+    },
+    {
+        "id": "798d56e9d0b11adb",
+        "type": "mqtt in",
+        "z": "4a1a66b1f3341ffc",
+        "name": "audio",
+        "topic": "smarthome/equipo01/sensor_extra",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "154674ac8b3984fd"
+            ]
+        ]
+    },
+    {
+        "id": "154674ac8b3984fd",
+        "type": "function",
+        "z": "4a1a66b1f3341ffc",
+        "name": "guardar estado",
+        "func": "let s = flow.get('estado') || {};\nlet p = msg.payload;\nif (p.temperatura !== undefined) s.temperatura = p.temperatura;\nif (p.humedad !== undefined) s.humedad = p.humedad;\nif (p.presion !== undefined) s.presion = p.presion;\nif (p.sensor_extra !== undefined) s.audio = p.sensor_extra;\nflow.set('estado', s);\nreturn null;\n",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 360,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "55d85a550013b804",
+        "type": "inject",
+        "z": "4a1a66b1f3341ffc",
+        "name": "cada 30s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "2d38fa040ef228bf"
+            ]
+        ]
+    },
+    {
+        "id": "2d38fa040ef228bf",
+        "type": "function",
+        "z": "4a1a66b1f3341ffc",
+        "name": "construir prompt",
+        "func": "let s = flow.get('estado') || {};\nif (s.temperatura === undefined) { node.status({fill:'yellow',shape:'ring',text:'sin datos aun'}); return null; }\nlet ahora = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});\nlet prompt = `Eres el sistema de control de una casa inteligente.\nEstado actual del hogar:\n- Temperatura: ${s.temperatura} C (umbral normal: 30)\n- Humedad: ${s.humedad} %\n- Presion: ${s.presion} hPa\n- Nivel de audio: ${s.audio} (umbral ruido alto: 500)\n- Hora local: ${ahora}\n\nDebes ser estricto con los umbrales(si se superan consideralo como alto). Responde SOLAMENTE en español. Analiza el estado y responde SOLO en JSON valido con esta estructura exacta:\n{\"nivel_alerta\":\"normal|alto\",\"activar_led\":true,\"mensaje_alerta\":\"texto corto\",\"razonamiento\":\"explicacion breve\"}`;\nmsg.payload = JSON.stringify({ model: 'phi3:mini', prompt: prompt, stream: false, format: 'json' });\nmsg.headers = { 'Content-Type': 'application/json' };\nnode.status({fill:'blue',shape:'dot',text:'consultando LLM...'});\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "a7d0c0a0521c105b"
+            ]
+        ]
+    },
+    {
+        "id": "a7d0c0a0521c105b",
+        "type": "http request",
+        "z": "4a1a66b1f3341ffc",
+        "name": "Ollama /api/generate",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 540,
+        "y": 300,
+        "wires": [
+            [
+                "7ed07a7fd08cc079"
+            ]
+        ]
+    },
+    {
+        "id": "7ed07a7fd08cc079",
+        "type": "function",
+        "z": "4a1a66b1f3341ffc",
+        "name": "parsear y actuar",
+        "func": "let r = msg.payload;\nlet txt = (r && r.response) ? r.response : '';\nlet d;\ntry { d = JSON.parse(txt); } catch (e) {\n    node.warn('El LLM no devolvio JSON valido: ' + txt);\n    node.status({fill:'red', shape:'ring', text:'JSON invalido'});\n    return null;\n}\nlet nivel = (d.nivel_alerta || 'normal').toLowerCase();\nnode.status({fill:'green', shape:'dot', text: nivel});\n\n// Guardar la decision para el semaforo (misma pestaña)\nflow.set('llm_nivel', nivel);\nflow.set('llm_msg', d.mensaje_alerta || '');\n\n// Salida 1: alerta -> LED + semaforo, ante cualquier nivel distinto de normal (= \"alto\")\nlet alerta = null;\nif (nivel !== 'normal') {\n    alerta = { topic: 'smarthome/equipo01/alerta', payload: d.mensaje_alerta || ('Alerta ' + nivel) };\n}\n// Salida 2: registro estructurado de la decision\nlet dec = { topic: 'smarthome/equipo01/llm/decision',\n            payload: JSON.stringify({nivel: d.nivel_alerta, mensaje: d.mensaje_alerta, razonamiento: d.razonamiento}) };\n// Salida 3: texto del dashboard\nlet ui = { payload: '[' + (d.nivel_alerta||'?') + '] ' + (d.mensaje_alerta||'') + ' - ' + (d.razonamiento||'') };\n\nreturn [ alerta ? [alerta] : null, [dec], [ui] ];",
+        "outputs": 3,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 300,
+        "wires": [
+            [
+                "74cd5fb4cd6c48f0"
+            ],
+            [
+                "aab6e51ee4fb6380",
+                "cc05f89e313ebc21"
+            ],
+            [
+                "5f58e76ae9869fa8"
+            ]
+        ]
+    },
+    {
+        "id": "74cd5fb4cd6c48f0",
+        "type": "mqtt out",
+        "z": "4a1a66b1f3341ffc",
+        "name": "alerta (LED + semaforo)",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 1020,
+        "y": 250,
+        "wires": []
+    },
+    {
+        "id": "aab6e51ee4fb6380",
+        "type": "mqtt out",
+        "z": "4a1a66b1f3341ffc",
+        "name": "llm/decision",
+        "topic": "",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "834ad0835709adb9",
+        "x": 1000,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5f58e76ae9869fa8",
+        "type": "ui_text",
+        "z": "4a1a66b1f3341ffc",
+        "group": "grpControl",
+        "order": 4,
+        "width": 8,
+        "height": 2,
+        "name": "Decision LLM",
+        "label": "Decisión LLM",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 1000,
+        "y": 350,
+        "wires": []
+    },
+    {
+        "id": "cc05f89e313ebc21",
+        "type": "function",
+        "z": "4a1a66b1f3341ffc",
+        "name": "estado sistema",
+        "func": "const nivel = (flow.get(\"llm_nivel\") || \"normal\").toLowerCase();\nconst texto = flow.get(\"llm_msg\") || \"\";\nlet estado;\nif (nivel === \"normal\") {\n    estado = \"🟢 Normal\";\n} else {\n    estado = \"🔴 \" + (texto || \"Alerta\");   // \"alto\" o cualquier nivel distinto de normal\n}\nmsg.payload = estado;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 460,
+        "wires": [
+            [
+                "42eb413b68501250"
+            ]
+        ]
+    },
+    {
+        "id": "42eb413b68501250",
+        "type": "ui_text",
+        "z": "4a1a66b1f3341ffc",
+        "group": "grpControl",
+        "order": 1,
+        "width": 8,
+        "height": 1,
+        "name": "",
+        "label": "Estado del sistema",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1210,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cq_in_temp",
+        "type": "mqtt in",
+        "z": "consulta_llm_tab",
+        "name": "temperatura",
+        "topic": "smarthome/equipo01/temperatura",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "cq_fn_estado"
+            ]
+        ]
+    },
+    {
+        "id": "cq_in_hum",
+        "type": "mqtt in",
+        "z": "consulta_llm_tab",
+        "name": "humedad",
+        "topic": "smarthome/equipo01/humedad",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "cq_fn_estado"
+            ]
+        ]
+    },
+    {
+        "id": "cq_in_pres",
+        "type": "mqtt in",
+        "z": "consulta_llm_tab",
+        "name": "presion",
+        "topic": "smarthome/equipo01/presion",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "cq_fn_estado"
+            ]
+        ]
+    },
+    {
+        "id": "cq_in_audio",
+        "type": "mqtt in",
+        "z": "consulta_llm_tab",
+        "name": "audio",
+        "topic": "smarthome/equipo01/sensor_extra",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "834ad0835709adb9",
+        "inputs": 0,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "cq_fn_estado"
+            ]
+        ]
+    },
+    {
+        "id": "cq_fn_estado",
+        "type": "function",
+        "z": "consulta_llm_tab",
+        "name": "guardar estado",
+        "func": "let s = flow.get('estado_q') || {};\nlet p = msg.payload;\nif (p.temperatura !== undefined) s.temperatura = p.temperatura;\nif (p.humedad !== undefined) s.humedad = p.humedad;\nif (p.presion !== undefined) s.presion = p.presion;\nif (p.sensor_extra !== undefined) s.audio = p.sensor_extra;\nflow.set('estado_q', s);\nreturn null;\n",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 360,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cq_form",
+        "type": "ui_form",
+        "z": "consulta_llm_tab",
+        "name": "Pregunta al hogar",
+        "label": "Pregúntale al hogar",
+        "group": "grpConsulta",
+        "order": 1,
+        "width": 8,
+        "height": 0,
+        "options": [
+            {
+                "label": "Escribe tu pregunta",
+                "value": "pregunta",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "pregunta": ""
+        },
+        "payload": "",
+        "submit": "Preguntar",
+        "cancel": "Borrar",
+        "topic": "",
+        "topicType": "str",
+        "splitLayout": "",
+        "className": "",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "cq_fn_prompt"
+            ]
+        ]
+    },
+    {
+        "id": "cq_fn_prompt",
+        "type": "function",
+        "z": "consulta_llm_tab",
+        "name": "construir consulta",
+        "func": "let pregunta = (msg.payload && msg.payload.pregunta) ? String(msg.payload.pregunta).trim() : '';\nif (!pregunta) { node.status({fill:'yellow',shape:'ring',text:'sin pregunta'}); return null; }\nlet s = flow.get('estado_q') || {};\nlet val = (x) => (x === undefined || x === null) ? 's/d' : x;\nlet prompt = `Eres el asistente de una casa inteligente. Responde en espanol, de forma breve y clara, usando solo los datos entregados.\n\nEstado actual del hogar:\n- Temperatura: ${val(s.temperatura)} C\n- Humedad: ${val(s.humedad)} %\n- Presion: ${val(s.presion)} hPa\n- Nivel de audio: ${val(s.audio)} (umbral ruido alto: 500)\n\nPregunta: ${pregunta}`;\nmsg.payload = JSON.stringify({ model: 'phi3:mini', prompt: prompt, stream: false });\nmsg.headers = { 'Content-Type': 'application/json' };\nnode.status({fill:'blue',shape:'dot',text:'consultando...'});\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "cq_http"
+            ]
+        ]
+    },
+    {
+        "id": "cq_http",
+        "type": "http request",
+        "z": "consulta_llm_tab",
+        "name": "Ollama /api/generate",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "cq_fn_resp"
+            ]
+        ]
+    },
+    {
+        "id": "cq_fn_resp",
+        "type": "function",
+        "z": "consulta_llm_tab",
+        "name": "extraer respuesta",
+        "func": "let r = msg.payload;\nlet texto = (r && r.response) ? String(r.response).trim() : 'Sin respuesta del LLM';\nnode.status({fill:'green',shape:'dot',text:'ok'});\nmsg.payload = texto;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 800,
+        "y": 320,
+        "wires": [
+            [
+                "cq_ui_resp"
+            ]
+        ]
+    },
+    {
+        "id": "cq_ui_resp",
+        "type": "ui_template",
+        "z": "consulta_llm_tab",
+        "group": "grpConsulta",
+        "name": "Respuesta",
+        "order": 2,
+        "width": 8,
+        "height": 3,
+        "format": "<div style=\"width:100%;\"><div style=\"font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sh-muted);margin-bottom:6px;\">Respuesta</div><div style=\"white-space:pre-wrap;line-height:1.55;background:var(--sh-chip);border:1px solid var(--sh-chip-border);border-radius:10px;padding:12px 14px;min-height:56px;color:var(--sh-text);\">{{msg.payload || \"Aún no has preguntado nada.\"}}</div></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1000,
+        "y": 320,
+        "wires": [
+            []
+        ]
     }
 ]
