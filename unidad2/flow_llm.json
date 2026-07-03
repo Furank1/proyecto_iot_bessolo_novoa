@@ -1,0 +1,250 @@
+[
+  {
+    "id": "tab_llm_u2",
+    "type": "tab",
+    "label": "LLM Unidad 2",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "llm_in_temp",
+    "type": "mqtt in",
+    "z": "tab_llm_u2",
+    "name": "temperatura",
+    "topic": "smarthome/equipo01/temperatura",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 80,
+    "wires": [
+      [
+        "llm_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "llm_in_hum",
+    "type": "mqtt in",
+    "z": "tab_llm_u2",
+    "name": "humedad",
+    "topic": "smarthome/equipo01/humedad",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 120,
+    "wires": [
+      [
+        "llm_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "llm_in_pres",
+    "type": "mqtt in",
+    "z": "tab_llm_u2",
+    "name": "presion",
+    "topic": "smarthome/equipo01/presion",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 160,
+    "wires": [
+      [
+        "llm_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "llm_in_audio",
+    "type": "mqtt in",
+    "z": "tab_llm_u2",
+    "name": "audio",
+    "topic": "smarthome/equipo01/sensor_extra",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 200,
+    "wires": [
+      [
+        "llm_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "llm_fn_estado",
+    "type": "function",
+    "z": "tab_llm_u2",
+    "name": "guardar estado",
+    "func": "let s = flow.get('estado') || {};\nlet p = msg.payload;\nif (p.temperatura !== undefined) s.temperatura = p.temperatura;\nif (p.humedad !== undefined) s.humedad = p.humedad;\nif (p.presion !== undefined) s.presion = p.presion;\nif (p.sensor_extra !== undefined) s.audio = p.sensor_extra;\nflow.set('estado', s);\nreturn null;\n",
+    "outputs": 0,
+    "noerr": 0,
+    "x": 360,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "llm_inject",
+    "type": "inject",
+    "z": "tab_llm_u2",
+    "name": "cada 30s",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "30",
+    "once": true,
+    "onceDelay": "3",
+    "payloadType": "date",
+    "x": 120,
+    "y": 300,
+    "wires": [
+      [
+        "llm_fn_prompt"
+      ]
+    ]
+  },
+  {
+    "id": "llm_fn_prompt",
+    "type": "function",
+    "z": "tab_llm_u2",
+    "name": "construir prompt",
+    "func": "let s = flow.get('estado') || {};\nif (s.temperatura === undefined) { node.status({fill:'yellow',shape:'ring',text:'sin datos aun'}); return null; }\nlet ahora = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});\nlet prompt = `Eres el sistema de control de una casa inteligente.\nEstado actual del hogar:\n- Temperatura: ${s.temperatura} C (umbral normal: 28)\n- Humedad: ${s.humedad} %\n- Presion: ${s.presion} hPa\n- Nivel de audio: ${s.audio} (umbral ruido alto: 500)\n- Hora local: ${ahora}\n\nAnaliza el estado y responde SOLO en JSON valido con esta estructura exacta:\n{\"nivel_alerta\":\"normal|alto\",\"activar_led\":true,\"mensaje_alerta\":\"texto corto\",\"razonamiento\":\"explicacion breve\"}`;\nmsg.payload = JSON.stringify({ model: 'phi3:mini', prompt: prompt, stream: false, format: 'json' });\nmsg.headers = { 'Content-Type': 'application/json' };\nnode.status({fill:'blue',shape:'dot',text:'consultando LLM...'});\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 320,
+    "y": 300,
+    "wires": [
+      [
+        "llm_http"
+      ]
+    ]
+  },
+  {
+    "id": "llm_http",
+    "type": "http request",
+    "z": "tab_llm_u2",
+    "name": "Ollama /api/generate",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "http://host.docker.internal:11434/api/generate",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "authType": "",
+    "senderr": false,
+    "x": 540,
+    "y": 300,
+    "wires": [
+      [
+        "llm_fn_parse"
+      ]
+    ]
+  },
+  {
+    "id": "llm_fn_parse",
+    "type": "function",
+    "z": "tab_llm_u2",
+    "name": "parsear y actuar",
+    "func": "let r = msg.payload;\nlet txt = (r && r.response) ? r.response : '';\nlet d;\ntry { d = JSON.parse(txt); } catch (e) {\n    node.warn('El LLM no devolvio JSON valido: ' + txt);\n    node.status({fill:'red',shape:'ring',text:'JSON invalido'});\n    return null;\n}\nlet nivel = (d.nivel_alerta || 'normal').toLowerCase();\nnode.status({fill:'green',shape:'dot',text: nivel});\n// Guardar la decision para el semaforo (misma pestaña)\nflow.set('llm_nivel', nivel);\nflow.set('llm_msg', d.mensaje_alerta || '');\n// Salida 1: alerta -> LED + semaforo, ante cualquier nivel distinto de normal\nlet alerta = null;\nif (nivel !== 'normal') {\n    alerta = { topic: 'smarthome/equipo01/alerta', payload: d.mensaje_alerta || ('Alerta ' + nivel) };\n}\n// Salida 2: registro estructurado de la decision\nlet dec = { topic: 'smarthome/equipo01/llm/decision', payload: JSON.stringify({nivel: d.nivel_alerta, mensaje: d.mensaje_alerta, razonamiento: d.razonamiento}) };\n// Salida 3: texto del dashboard\nlet ui = { payload: '[' + (d.nivel_alerta||'?') + '] ' + (d.mensaje_alerta||'') + ' - ' + (d.razonamiento||'') };\nreturn [ alerta ? [alerta] : null, [dec], [ui] ];\n",
+    "outputs": 3,
+    "noerr": 0,
+    "x": 760,
+    "y": 300,
+    "wires": [
+      [
+        "llm_out_alerta"
+      ],
+      [
+        "llm_out_dec",
+        "llm_fn_semaforo"
+      ],
+      [
+        "llm_ui_text"
+      ]
+    ]
+  },
+  {
+    "id": "llm_out_alerta",
+    "type": "mqtt out",
+    "z": "tab_llm_u2",
+    "name": "alerta (LED + semaforo)",
+    "topic": "",
+    "qos": "0",
+    "retain": "false",
+    "broker": "834ad0835709adb9",
+    "x": 1020,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "llm_out_dec",
+    "type": "mqtt out",
+    "z": "tab_llm_u2",
+    "name": "llm/decision",
+    "topic": "",
+    "qos": "0",
+    "retain": "false",
+    "broker": "834ad0835709adb9",
+    "x": 1000,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "llm_ui_text",
+    "type": "ui_text",
+    "z": "tab_llm_u2",
+    "group": "grpControl",
+    "order": 6,
+    "width": 6,
+    "height": 2,
+    "name": "Decision LLM",
+    "label": "Decision LLM:",
+    "format": "{{msg.payload}}",
+    "layout": "col-center",
+    "x": 1000,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "llm_fn_semaforo",
+    "type": "function",
+    "z": "tab_llm_u2",
+    "name": "estado sistema",
+    "func": "const nivel = (flow.get('llm_nivel') || 'normal').toLowerCase();\nconst texto = flow.get('llm_msg') || '';\nlet estado;\nif (nivel === 'normal') {\n    estado = '🟢 Normal';\n} else {\n    estado = '🔴 ' + (texto || 'Alerta');\n}\nmsg.payload = estado;\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1010,
+    "y": 430,
+    "wires": [
+      [
+        "llm_ui_estado"
+      ]
+    ]
+  },
+  {
+    "id": "llm_ui_estado",
+    "type": "ui_text",
+    "z": "tab_llm_u2",
+    "group": "grpControl",
+    "order": 1,
+    "width": 6,
+    "height": 1,
+    "name": "Estado del sistema",
+    "label": "Estado del sistema",
+    "format": "{{msg.payload}}",
+    "layout": "row-spread",
+    "x": 1230,
+    "y": 430,
+    "wires": []
+  }
+]

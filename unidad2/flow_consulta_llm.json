@@ -1,0 +1,216 @@
+[
+  {
+    "id": "consulta_llm_tab",
+    "type": "tab",
+    "label": "Consulta LLM",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "grpConsulta",
+    "type": "ui_group",
+    "name": "Consulta al hogar",
+    "tab": "9b04c3fa896638e7",
+    "order": 4,
+    "disp": true,
+    "width": 6,
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "cq_in_temp",
+    "type": "mqtt in",
+    "z": "consulta_llm_tab",
+    "name": "temperatura",
+    "topic": "smarthome/equipo01/temperatura",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 80,
+    "wires": [
+      [
+        "cq_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "cq_in_hum",
+    "type": "mqtt in",
+    "z": "consulta_llm_tab",
+    "name": "humedad",
+    "topic": "smarthome/equipo01/humedad",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 120,
+    "wires": [
+      [
+        "cq_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "cq_in_pres",
+    "type": "mqtt in",
+    "z": "consulta_llm_tab",
+    "name": "presion",
+    "topic": "smarthome/equipo01/presion",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 160,
+    "wires": [
+      [
+        "cq_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "cq_in_audio",
+    "type": "mqtt in",
+    "z": "consulta_llm_tab",
+    "name": "audio",
+    "topic": "smarthome/equipo01/sensor_extra",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "x": 130,
+    "y": 200,
+    "wires": [
+      [
+        "cq_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "cq_fn_estado",
+    "type": "function",
+    "z": "consulta_llm_tab",
+    "name": "guardar estado",
+    "func": "let s = flow.get('estado_q') || {};\nlet p = msg.payload;\nif (p.temperatura !== undefined) s.temperatura = p.temperatura;\nif (p.humedad !== undefined) s.humedad = p.humedad;\nif (p.presion !== undefined) s.presion = p.presion;\nif (p.sensor_extra !== undefined) s.audio = p.sensor_extra;\nflow.set('estado_q', s);\nreturn null;\n",
+    "outputs": 0,
+    "noerr": 0,
+    "x": 360,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "cq_form",
+    "type": "ui_form",
+    "z": "consulta_llm_tab",
+    "name": "Pregunta al hogar",
+    "label": "Pregúntale al hogar",
+    "group": "grpConsulta",
+    "order": 1,
+    "width": 6,
+    "height": 0,
+    "options": [
+      {
+        "label": "Escribe tu pregunta",
+        "value": "pregunta",
+        "type": "text",
+        "required": true,
+        "rows": null
+      }
+    ],
+    "formValue": {
+      "pregunta": ""
+    },
+    "payload": "",
+    "submit": "Preguntar",
+    "cancel": "Borrar",
+    "topic": "",
+    "topicType": "str",
+    "splitLayout": "",
+    "className": "",
+    "x": 140,
+    "y": 320,
+    "wires": [
+      [
+        "cq_fn_prompt"
+      ]
+    ]
+  },
+  {
+    "id": "cq_fn_prompt",
+    "type": "function",
+    "z": "consulta_llm_tab",
+    "name": "construir consulta",
+    "func": "let pregunta = (msg.payload && msg.payload.pregunta) ? String(msg.payload.pregunta).trim() : '';\nif (!pregunta) { node.status({fill:'yellow',shape:'ring',text:'sin pregunta'}); return null; }\nlet s = flow.get('estado_q') || {};\nlet val = (x) => (x === undefined || x === null) ? 's/d' : x;\nlet prompt = `Eres el asistente de una casa inteligente. Responde en espanol, de forma breve y clara, usando solo los datos entregados.\n\nEstado actual del hogar:\n- Temperatura: ${val(s.temperatura)} C\n- Humedad: ${val(s.humedad)} %\n- Presion: ${val(s.presion)} hPa\n- Nivel de audio: ${val(s.audio)} (umbral ruido alto: 500)\n\nPregunta: ${pregunta}`;\nmsg.payload = JSON.stringify({ model: 'phi3:mini', prompt: prompt, stream: false });\nmsg.headers = { 'Content-Type': 'application/json' };\nnode.status({fill:'blue',shape:'dot',text:'consultando...'});\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 360,
+    "y": 320,
+    "wires": [
+      [
+        "cq_http"
+      ]
+    ]
+  },
+  {
+    "id": "cq_http",
+    "type": "http request",
+    "z": "consulta_llm_tab",
+    "name": "Ollama /api/generate",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "http://host.docker.internal:11434/api/generate",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "authType": "",
+    "senderr": false,
+    "x": 580,
+    "y": 320,
+    "wires": [
+      [
+        "cq_fn_resp"
+      ]
+    ]
+  },
+  {
+    "id": "cq_fn_resp",
+    "type": "function",
+    "z": "consulta_llm_tab",
+    "name": "extraer respuesta",
+    "func": "let r = msg.payload;\nlet texto = (r && r.response) ? String(r.response).trim() : 'Sin respuesta del LLM';\nnode.status({fill:'green',shape:'dot',text:'ok'});\nmsg.payload = texto;\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 800,
+    "y": 320,
+    "wires": [
+      [
+        "cq_ui_resp"
+      ]
+    ]
+  },
+  {
+    "id": "cq_ui_resp",
+    "type": "ui_template",
+    "z": "consulta_llm_tab",
+    "group": "grpConsulta",
+    "name": "Respuesta",
+    "order": 2,
+    "width": 6,
+    "height": 6,
+    "format": "<div style=\"white-space:pre-wrap; padding:6px 4px; line-height:1.4; height:100%; overflow:auto;\">{{msg.payload}}</div>",
+    "storeOutMessages": true,
+    "fwdInMessages": true,
+    "resendOnRefresh": true,
+    "templateScope": "local",
+    "className": "",
+    "x": 1000,
+    "y": 320,
+    "wires": [
+      []
+    ]
+  }
+]
