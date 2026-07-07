@@ -1,3 +1,9 @@
+# Copia del stack de la Unidad 3 para efectos de entrega/lectura.
+# El stack REAL se levanta desde nodered-debian/ (docker compose up -d),
+# porque ahi estan las rutas relativas de los volumenes (./mosquitto, ./datos,
+# ./face-service) y los Dockerfile de build de nodered y face-service.
+# Este archivo es identico al de nodered-debian/docker-compose.yml.
+
 services:
   mosquitto:
     image: eclipse-mosquitto

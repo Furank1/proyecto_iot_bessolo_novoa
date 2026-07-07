@@ -1,0 +1,406 @@
+[
+  {
+    "id": "834ad0835709adb9",
+    "type": "mqtt-broker",
+    "name": "",
+    "broker": "mosquitto",
+    "port": "8883",
+    "tls": "254f8ecc2485a289",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": true,
+    "protocolVersion": 4,
+    "keepalive": 60,
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthRetain": "false",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closeRetain": "false",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willRetain": "false",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  },
+  {
+    "id": "gemelo_u3_tab",
+    "type": "tab",
+    "label": "Gemelo Digital U3",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "gm_mqtt_in",
+    "type": "mqtt in",
+    "z": "gemelo_u3_tab",
+    "x": 130,
+    "y": 120,
+    "name": "smarthome/equipo01/#",
+    "topic": "smarthome/equipo01/#",
+    "qos": "0",
+    "datatype": "auto-detect",
+    "broker": "834ad0835709adb9",
+    "inputs": 0,
+    "wires": [
+      [
+        "gm_fn_actualizar",
+        "gm_fn_influx",
+        "gm_fn_fwd_n8n"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_actualizar",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 60,
+    "name": "actualizar gemelo",
+    "func": "\nlet g = global.get('gemelo') || {\n    estado_actual: { temperatura: null, humedad: null, presion: null, audio: null,\n                     persona: false, led: false },\n    historial_1h: [],\n    alertas_activas: [],\n    prediccion_30min: {},\n    umbrales: { temperatura: 30, audio: 500 },\n    resumen_llm: ''\n};\nconst t = msg.topic || '';\nlet p = msg.payload;\nif (typeof p === 'string') {\n    try { p = JSON.parse(p); } catch (e) { /* payload de texto plano (p.ej. alerta) */ }\n}\n\nif (t.endsWith('/temperatura') && p && p.temperatura !== undefined) g.estado_actual.temperatura = p.temperatura;\nelse if (t.endsWith('/humedad') && p && p.humedad !== undefined) g.estado_actual.humedad = p.humedad;\nelse if (t.endsWith('/presion') && p && p.presion !== undefined) g.estado_actual.presion = p.presion;\nelse if (t.endsWith('/sensor_extra') && p && p.sensor_extra !== undefined) g.estado_actual.audio = p.sensor_extra;\nelse if (t.endsWith('/alerta')) {\n    const mensaje = (typeof msg.payload === 'string') ? msg.payload : JSON.stringify(msg.payload);\n    // dedupe: el broker entrega el mismo mensaje 2 veces (suscripciones solapadas)\n    const ultima = g.alertas_activas[g.alertas_activas.length - 1];\n    if (!(ultima && ultima.mensaje === mensaje && Date.now() - new Date(ultima.ts).getTime() < 5000)) {\n        g.alertas_activas.push({ ts: new Date().toISOString(), mensaje: mensaje });\n    }\n} else if (t.endsWith('/camara/evento')) {\n    g._persona_ts = Date.now();\n} else if (t.endsWith('/control/led')) {\n    g.estado_actual.led = (msg.payload === 'on' || msg.payload === true);\n} else if (t.indexOf('/prediccion/') !== -1) {\n    const variable = t.split('/').pop();\n    if (p && p.valor !== undefined) g.prediccion_30min[variable] = p.valor;\n}\n\n// vigencia: alertas de los ultimos 10 min, persona vista hace < 60 s\nconst hace10min = Date.now() - 10 * 60 * 1000;\ng.alertas_activas = g.alertas_activas.filter(a => new Date(a.ts).getTime() > hace10min).slice(-20);\ng.estado_actual.persona = !!(g._persona_ts && (Date.now() - g._persona_ts) < 60000);\ng.ultimo_update = new Date().toISOString();\nglobal.set('gemelo', g);\nreturn null;\n",
+    "outputs": 0,
+    "noerr": 0,
+    "wires": []
+  },
+  {
+    "id": "gm_fn_influx",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 120,
+    "name": "a line protocol",
+    "func": "\n// Convierte el mensaje del sensor a line protocol y lo escribe en InfluxDB\nconst campo = {\n    'temperatura': 'temperatura', 'humedad': 'humedad',\n    'presion': 'presion', 'sensor_extra': 'audio'\n}[(msg.topic || '').split('/').pop()];\nif (!campo) return null;\nlet p = msg.payload;\nif (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { return null; } }\nconst clave = campo === 'audio' ? 'sensor_extra' : campo;\nconst v = p ? p[clave] : undefined;\nif (typeof v !== 'number' || isNaN(v)) return null;\n\n// dedupe: el broker entrega 2 veces el mismo mensaje por suscripciones solapadas\nconst ultimo = context.get('t_' + campo) || 0;\nif (Date.now() - ultimo < 1000) return null;\ncontext.set('t_' + campo, Date.now());\n\nmsg.method = 'POST';\nmsg.url = 'http://influxdb:8086/api/v2/write?org=smarthome&bucket=sensores&precision=ms';\nmsg.headers = {\n    'Authorization': 'Token ' + env.get('INFLUXDB_TOKEN'),\n    'Content-Type': 'text/plain; charset=utf-8'\n};\nmsg.payload = 'sensores,equipo=equipo01 ' + campo + '=' + v + ' ' + Date.now();\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_http_influx"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_influx",
+    "type": "http request",
+    "z": "gemelo_u3_tab",
+    "x": 640,
+    "y": 120,
+    "name": "InfluxDB write",
+    "method": "use",
+    "ret": "txt",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "authType": "",
+    "senderr": true,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "gm_fn_fwd_n8n",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 180,
+    "name": "alerta -> webhook n8n",
+    "func": "\n// Reenvia una alerta MQTT al webhook del agente n8n (debounce de 120 s)\nif (!(msg.topic || '').endsWith('/alerta')) return null;\nconst ultimo = context.get('ultimo_fwd') || 0;\nif (Date.now() - ultimo < 120000) return null;\ncontext.set('ultimo_fwd', Date.now());\nreturn {\n    method: 'POST',\n    url: 'http://n8n:5678/webhook/evento-critico',\n    headers: { 'Content-Type': 'application/json' },\n    payload: { alerta: (typeof msg.payload === 'string') ? msg.payload : JSON.stringify(msg.payload) }\n};\n",
+    "outputs": 1,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_http_n8n"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_n8n",
+    "type": "http request",
+    "z": "gemelo_u3_tab",
+    "x": 640,
+    "y": 180,
+    "name": "n8n evento-critico",
+    "method": "use",
+    "ret": "txt",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "authType": "",
+    "senderr": true,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "gm_inject_1m",
+    "type": "inject",
+    "z": "gemelo_u3_tab",
+    "x": 140,
+    "y": 260,
+    "name": "cada 1 min",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "60",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "10",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "wires": [
+      [
+        "gm_fn_snapshot"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_snapshot",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 260,
+    "name": "snapshot historial",
+    "func": "\n// Cada 1 min: agrega el estado actual al historial (maximo 60 registros = 1 h)\nlet g = global.get('gemelo');\nif (!g || g.estado_actual.temperatura === null) return null;\ng.historial_1h.push({\n    ts: new Date().toISOString(),\n    temperatura: g.estado_actual.temperatura,\n    humedad: g.estado_actual.humedad,\n    presion: g.estado_actual.presion,\n    audio: g.estado_actual.audio\n});\nif (g.historial_1h.length > 60) g.historial_1h = g.historial_1h.slice(-60);\nglobal.set('gemelo', g);\nreturn null;\n",
+    "outputs": 0,
+    "noerr": 0,
+    "wires": []
+  },
+  {
+    "id": "gm_http_in_estado",
+    "type": "http in",
+    "z": "gemelo_u3_tab",
+    "x": 140,
+    "y": 340,
+    "name": "",
+    "url": "/gemelo/estado",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "wires": [
+      [
+        "gm_fn_estado"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_estado",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 340,
+    "name": "armar estado",
+    "func": "\nconst g = global.get('gemelo') || {};\nconst salida = {\n    ultimo_update: g.ultimo_update || null,\n    estado_actual: g.estado_actual || {},\n    historial_1h: g.historial_1h || [],\n    alertas_activas: (g.alertas_activas || []).map(a => a.mensaje),\n    prediccion_30min: g.prediccion_30min || {},\n    umbrales: g.umbrales || {},\n    resumen_llm: g.resumen_llm || ''\n};\nmsg.payload = salida;\nmsg.statusCode = 200;\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_http_res_estado"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_res_estado",
+    "type": "http response",
+    "z": "gemelo_u3_tab",
+    "x": 640,
+    "y": 340,
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "wires": []
+  },
+  {
+    "id": "gm_http_in_accion",
+    "type": "http in",
+    "z": "gemelo_u3_tab",
+    "x": 140,
+    "y": 420,
+    "name": "",
+    "url": "/gemelo/accion",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "wires": [
+      [
+        "gm_fn_accion"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_accion",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 420,
+    "name": "ejecutar herramienta",
+    "func": "\n// Ejecuta una accion del agente: llega { herramienta, parametros, razonamiento? }\n// Salidas: [ mqtt out, escritura InfluxDB (eventos), respuesta HTTP ]\nconst b = msg.payload || {};\nconst h = b.herramienta;\nconst p = b.parametros || {};\nlet g = global.get('gemelo') || {};\nconst lp = (texto) => String(texto).replace(/\\\\/g, '\\\\\\\\').replace(/\"/g, '\\\\\"');\n\nlet mqttMsg = null, influxMsg = null;\nlet detalle = '';\n\nif (h === 'activar_actuador') {\n    const disp = p.dispositivo || 'led';\n    const estado = (p.estado === true || p.estado === 'true' || p.estado === 'on');\n    // semantica del LED del proyecto: control/led espera \"on\"/\"off\"\n    mqttMsg = { topic: 'smarthome/equipo01/control/' + disp, payload: estado ? 'on' : 'off' };\n    detalle = 'actuador ' + disp + ' -> ' + (estado ? 'on' : 'off');\n} else if (h === 'enviar_notificacion') {\n    mqttMsg = { topic: 'smarthome/equipo01/llm/notificacion', payload: String(p.mensaje || '') };\n    detalle = 'notificacion: ' + (p.mensaje || '');\n} else if (h === 'registrar_evento') {\n    detalle = 'evento: ' + (p.descripcion || '');\n} else if (h === 'ajustar_umbral') {\n    g.umbrales = g.umbrales || {};\n    if (p.sensor && p.nuevo_umbral !== undefined) {\n        g.umbrales[p.sensor] = Number(p.nuevo_umbral);\n        global.set('gemelo', g);\n    }\n    detalle = 'umbral ' + p.sensor + ' -> ' + p.nuevo_umbral;\n} else {\n    msg.statusCode = 400;\n    msg.payload = { ok: false, error: 'herramienta desconocida: ' + h };\n    return [null, null, msg];\n}\n\n// registro del uso de la herramienta en InfluxDB (measurement eventos)\ninfluxMsg = {\n    method: 'POST',\n    url: 'http://influxdb:8086/api/v2/write?org=smarthome&bucket=sensores&precision=ms',\n    headers: { 'Authorization': 'Token ' + env.get('INFLUXDB_TOKEN'),\n               'Content-Type': 'text/plain; charset=utf-8' },\n    payload: 'eventos,origen=agente herramienta=\"' + lp(h) + '\",detalle=\"' + lp(detalle) + '\" ' + Date.now()\n};\n\nmsg.statusCode = 200;\nmsg.payload = { ok: true, ejecutado: h, detalle: detalle };\nreturn [mqttMsg, influxMsg, msg];\n",
+    "outputs": 3,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_mqtt_out"
+      ],
+      [
+        "gm_http_influx2"
+      ],
+      [
+        "gm_http_res_accion"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_res_accion",
+    "type": "http response",
+    "z": "gemelo_u3_tab",
+    "x": 660,
+    "y": 480,
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "wires": []
+  },
+  {
+    "id": "gm_http_in_decision",
+    "type": "http in",
+    "z": "gemelo_u3_tab",
+    "x": 140,
+    "y": 560,
+    "name": "",
+    "url": "/gemelo/decision",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "wires": [
+      [
+        "gm_fn_decision"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_decision",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 560,
+    "name": "registrar decision",
+    "func": "\n// Registra el ciclo de razonamiento del agente.\n// Llega { razonamiento, acciones: [...] }\n// Salidas: [ mqtt llm/decision, escritura InfluxDB (agente), respuesta HTTP ]\nconst b = msg.payload || {};\nconst razonamiento = String(b.razonamiento || '');\nconst acciones = Array.isArray(b.acciones) ? b.acciones : [];\nconst lp = (texto) => String(texto).replace(/\\\\/g, '\\\\\\\\').replace(/\"/g, '\\\\\"');\n\nlet g = global.get('gemelo') || {};\ng.resumen_llm = razonamiento;\nglobal.set('gemelo', g);\n\nconst mqttMsg = {\n    topic: 'smarthome/equipo01/llm/decision',\n    payload: JSON.stringify({ razonamiento: razonamiento, acciones: acciones })\n};\nconst resumenAcc = acciones.map(a => a.herramienta || '?').join(',') || 'ninguna';\nconst influxMsg = {\n    method: 'POST',\n    url: 'http://influxdb:8086/api/v2/write?org=smarthome&bucket=sensores&precision=ms',\n    headers: { 'Authorization': 'Token ' + env.get('INFLUXDB_TOKEN'),\n               'Content-Type': 'text/plain; charset=utf-8' },\n    payload: 'agente,origen=n8n razonamiento=\"' + lp(razonamiento) + '\",acciones=\"' + lp(resumenAcc)\n             + '\",n_acciones=' + acciones.length + 'i ' + Date.now()\n};\n\nmsg.statusCode = 200;\nmsg.payload = { ok: true };\nreturn [mqttMsg, influxMsg, msg];\n",
+    "outputs": 3,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_mqtt_out"
+      ],
+      [
+        "gm_http_influx2"
+      ],
+      [
+        "gm_http_res_decision"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_res_decision",
+    "type": "http response",
+    "z": "gemelo_u3_tab",
+    "x": 660,
+    "y": 620,
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "wires": []
+  },
+  {
+    "id": "gm_http_in_grafana",
+    "type": "http in",
+    "z": "gemelo_u3_tab",
+    "x": 140,
+    "y": 700,
+    "name": "",
+    "url": "/grafana/alerta",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "wires": [
+      [
+        "gm_fn_grafana"
+      ]
+    ]
+  },
+  {
+    "id": "gm_fn_grafana",
+    "type": "function",
+    "z": "gemelo_u3_tab",
+    "x": 400,
+    "y": 700,
+    "name": "alerta Grafana -> MQTT",
+    "func": "\n// Webhook de la alerta de Grafana -> publica alerta MQTT\n// Salidas: [ mqtt alerta, respuesta HTTP ]\nconst b = msg.payload || {};\nconst titulo = b.title || (b.alerts && b.alerts[0] && b.alerts[0].labels && b.alerts[0].labels.alertname) || 'Alerta Grafana';\nconst mqttMsg = {\n    topic: 'smarthome/equipo01/alerta',\n    payload: JSON.stringify({ tipo: 'grafana', mensaje: titulo })\n};\nmsg.statusCode = 200;\nmsg.payload = { ok: true };\nreturn [mqttMsg, msg];\n",
+    "outputs": 2,
+    "noerr": 0,
+    "wires": [
+      [
+        "gm_mqtt_out"
+      ],
+      [
+        "gm_http_res_grafana"
+      ]
+    ]
+  },
+  {
+    "id": "gm_http_res_grafana",
+    "type": "http response",
+    "z": "gemelo_u3_tab",
+    "x": 660,
+    "y": 740,
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "wires": []
+  },
+  {
+    "id": "gm_mqtt_out",
+    "type": "mqtt out",
+    "z": "gemelo_u3_tab",
+    "x": 900,
+    "y": 480,
+    "name": "publicar MQTT",
+    "topic": "",
+    "qos": "0",
+    "retain": "false",
+    "broker": "834ad0835709adb9",
+    "wires": []
+  },
+  {
+    "id": "gm_http_influx2",
+    "type": "http request",
+    "z": "gemelo_u3_tab",
+    "x": 900,
+    "y": 560,
+    "name": "InfluxDB write",
+    "method": "use",
+    "ret": "txt",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "authType": "",
+    "senderr": true,
+    "wires": [
+      []
+    ]
+  }
+]

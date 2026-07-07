@@ -5,7 +5,7 @@
 
 const char* ssid        = "S24 de Franco";
 const char* password    = "hola1234";
-const char* mqtt_server = "10.108.139.2";
+const char* mqtt_server = "10.194.19.2";
 const int   mqtt_port   = 8883;
 
 const char* TOPIC_FOTO    = "cam/foto";

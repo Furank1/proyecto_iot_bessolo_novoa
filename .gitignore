@@ -27,6 +27,10 @@ nodered-debian/seed/
 # ---- Datos generados en tiempo de ejecucion ----
 nodered-debian/datos/*.csv
 
+# ---- Credenciales locales (Unidad 3: InfluxDB, Grafana) ----
+.env
+!.env.example
+
 # ---- Python: cache ----
 **/__pycache__/
 *.pyc

@@ -17,7 +17,7 @@
 // ===================== CONFIGURACION =====================
 const char* ssid        = "S24 de Franco";      // <-- tu red WiFi
 const char* password    = "hola1234";       // <-- clave WiFi
-const char* mqtt_server = "10.190.215.2";// <-- IP del PC (ipconfig)
+const char* mqtt_server = "10.194.19.2";// <-- IP del PC (ipconfig)
 const int   mqtt_port   = 8883;               // TLS
 const char* mqtt_user   = "sensor";           // usuario MQTT
 const char* mqtt_pass   = "sensor123";  // <-- contrasena del usuario sensor

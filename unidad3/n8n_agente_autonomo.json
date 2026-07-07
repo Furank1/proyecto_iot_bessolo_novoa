@@ -1,0 +1,246 @@
+{
+  "name": "Agente Autonomo SmartHome",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "ag-schedule",
+      "name": "Cada 5 minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -460,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evento-critico",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "ag-webhook",
+      "name": "Webhook evento critico",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        120
+      ],
+      "webhookId": "evento-critico"
+    },
+    {
+      "parameters": {
+        "url": "http://nodered-debian:1880/gemelo/estado",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "ag-gemelo",
+      "name": "Obtener gemelo digital",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -220,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construye el prompt de agente con el estado del gemelo digital\nconst gemelo = $input.first().json;\n\n// contexto compacto: estado + ultimos 10 registros del historial\nconst contexto = {\n  ultimo_update: gemelo.ultimo_update,\n  estado_actual: gemelo.estado_actual,\n  historial_reciente: (gemelo.historial_1h || []).slice(-10),\n  alertas_activas: gemelo.alertas_activas,\n  prediccion_30min: gemelo.prediccion_30min,\n  umbrales: gemelo.umbrales,\n  resumen_anterior: gemelo.resumen_llm\n};\n\nconst prompt = `Eres un agente de control de un hogar inteligente.\nTienes disponibles las siguientes herramientas:\n- activar_actuador(dispositivo, estado)   // dispositivo: \"led\", estado: true|false\n- enviar_notificacion(mensaje)\n- registrar_evento(descripcion)\n- ajustar_umbral(sensor, nuevo_umbral)    // sensor: \"temperatura\" o \"audio\"\n\nEstado del gemelo digital (JSON): ${JSON.stringify(contexto)}\n\nReglas:\n- El LED es la alarma visual del hogar: enciendelo si hay una condicion anormal (temperatura sobre su umbral, audio sobre su umbral, alerta activa o prediccion que supere el umbral) y apagalo si todo esta normal.\n- Usa enviar_notificacion solo para condiciones anormales.\n- Usa registrar_evento para dejar constancia de lo observado en cada ciclo.\n- Responde en espanol.\n\nDecide que acciones ejecutar. Responde SOLO en JSON valido con exactamente esta estructura:\n{\n  \"acciones\": [\n    { \"herramienta\": \"activar_actuador\", \"parametros\": { \"dispositivo\": \"led\", \"estado\": true } }\n  ],\n  \"razonamiento\": \"explicacion breve de la decision\"\n}`;\n\nreturn [{ json: { model: 'phi3:mini', prompt, stream: false, format: 'json' } }];"
+      },
+      "id": "ag-prompt",
+      "name": "Construir prompt de agente",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "ag-ollama",
+      "name": "Ollama phi3:mini",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsea la respuesta del LLM y genera un item por accion.\n// Tolerante con las variaciones tipicas de un modelo pequeno (phi3:mini).\nconst HERRAMIENTAS = ['activar_actuador', 'enviar_notificacion', 'registrar_evento', 'ajustar_umbral'];\nconst r = $input.first().json;\nlet d;\ntry {\n  d = JSON.parse(r.response);\n} catch (e) {\n  // JSON invalido: no se ejecuta nada, se registra el problema\n  return [{ json: { herramienta: 'registrar_evento', parametros: { descripcion: 'LLM devolvio JSON invalido' }, _error: true } }];\n}\nconst crudas = Array.isArray(d.acciones) ? d.acciones : (Array.isArray(d.actions) ? d.actions : []);\nconst normalizadas = [];\nfor (const a of crudas) {\n  if (!a || typeof a !== 'object') continue;\n  let herramienta = a.herramienta || a.tool || a.accion || a.nombre;\n  let parametros = a.parametros || a.params || a.parameters;\n  if (!herramienta) {\n    // formato alternativo: { \"activar_actuador\": { ... } }\n    const claves = Object.keys(a).filter(k => HERRAMIENTAS.includes(k));\n    if (claves.length === 1) {\n      herramienta = claves[0];\n      parametros = a[claves[0]];\n    }\n  }\n  if (!HERRAMIENTAS.includes(herramienta)) continue;\n  normalizadas.push({ json: { herramienta, parametros: (parametros && typeof parametros === 'object') ? parametros : {} } });\n}\nreturn normalizadas;"
+      },
+      "id": "ag-parse-acciones",
+      "name": "Parsear acciones",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://nodered-debian:1880/gemelo/accion",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "ag-ejecutar",
+      "name": "Ejecutar accion (Node-RED)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepara el registro del ciclo de razonamiento completo\nconst r = $input.first().json;\nlet d;\ntry {\n  d = JSON.parse(r.response);\n} catch (e) {\n  d = { acciones: [], razonamiento: 'JSON invalido: ' + String(r.response).slice(0, 200) };\n}\nconst razonamiento = d.razonamiento || d.reasoning || d.explicacion || d.razon || '(el modelo no entrego razonamiento)';\nconst acciones = Array.isArray(d.acciones) ? d.acciones : (Array.isArray(d.actions) ? d.actions : []);\nreturn [{ json: { razonamiento: String(razonamiento), acciones } }];"
+      },
+      "id": "ag-parse-decision",
+      "name": "Preparar registro de decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://nodered-debian:1880/gemelo/decision",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "ag-registrar",
+      "name": "Registrar decision (InfluxDB)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        120
+      ]
+    }
+  ],
+  "connections": {
+    "Cada 5 minutos": {
+      "main": [
+        [
+          {
+            "node": "Obtener gemelo digital",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook evento critico": {
+      "main": [
+        [
+          {
+            "node": "Obtener gemelo digital",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener gemelo digital": {
+      "main": [
+        [
+          {
+            "node": "Construir prompt de agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construir prompt de agente": {
+      "main": [
+        [
+          {
+            "node": "Ollama phi3:mini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama phi3:mini": {
+      "main": [
+        [
+          {
+            "node": "Parsear acciones",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Preparar registro de decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear acciones": {
+      "main": [
+        [
+          {
+            "node": "Ejecutar accion (Node-RED)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar registro de decision": {
+      "main": [
+        [
+          {
+            "node": "Registrar decision (InfluxDB)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": true,
+  "id": "AgenteSmartHome1"
+}
